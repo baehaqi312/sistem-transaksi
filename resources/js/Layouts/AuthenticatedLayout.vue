@@ -1,0 +1,192 @@
+<script setup>
+// import { Head } from '@inertiajs/vue3'
+import AppLayouts from "../App.vue";
+import Swal from "sweetalert2";
+import { computed, onMounted, watchEffect } from "vue";
+import { usePage } from "@inertiajs/vue3";
+import { useTemplateStore } from "@/stores/template";
+
+// Import all layout partials
+import BaseHeader from "./partials/Header.vue";
+import BaseSidebar from "./partials/Sidebar.vue";
+import BaseFooter from "./partials/Footer.vue";
+
+// Component properties
+defineProps({
+    sidebarWithMiniNav: {
+        type: Boolean,
+        default: false,
+        description: "If the sidebar is in Mini Nav Mode",
+    },
+});
+
+// Main store
+const store = useTemplateStore();
+
+// Set default color theme
+store.setColorTheme({
+    theme: store.settings.colorTheme,
+});
+
+// Render main classes based on store options
+const classContainer = computed(() => {
+    return {
+        "sidebar-r": store.layout.sidebar && !store.settings.sidebarLeft,
+        "sidebar-mini": store.layout.sidebar && store.settings.sidebarMini,
+        "sidebar-o": store.layout.sidebar && store.settings.sidebarVisibleDesktop,
+        "sidebar-o-xs": store.layout.sidebar && store.settings.sidebarVisibleMobile,
+        "sidebar-dark":
+            store.layout.sidebar &&
+            store.settings.sidebarDark &&
+            !store.settings.darkMode,
+        "side-overlay-o":
+            store.layout.sideOverlay && store.settings.sideOverlayVisible,
+        "side-overlay-hover":
+            store.layout.sideOverlay && store.settings.sideOverlayHoverable,
+        "enable-page-overlay":
+            store.layout.sideOverlay && store.settings.pageOverlay,
+        "page-header-fixed": store.layout.header && store.settings.headerFixed,
+        "page-header-dark":
+            store.layout.header &&
+            store.settings.headerDark &&
+            !store.settings.darkMode,
+        "main-content-boxed": store.settings.mainContent === "boxed",
+        "main-content-narrow": store.settings.mainContent === "narrow",
+        "rtl-support": store.settings.rtlSupport,
+        "side-trans-enabled": store.settings.sideTransitions,
+        "side-scroll": true,
+        "sidebar-dark page-header-dark dark-mode": store.settings.darkMode,
+    };
+});
+
+// Change dark mode based on dark mode system preference
+if (store.settings.darkModeSystem) {
+    if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+        store.darkMode({ mode: "on" });
+    } else {
+        store.darkMode({ mode: "off" });
+    }
+}
+
+window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+        if (store.settings.darkModeSystem) {
+            if (e.matches) {
+                store.darkMode({ mode: "on" });
+            } else {
+                store.darkMode({ mode: "off" });
+            }
+        }
+    });
+
+// Remove side transitions on window resizing
+onMounted(() => {
+    let winResize = false;
+
+    window.addEventListener("resize", () => {
+        clearTimeout(winResize);
+
+        store.setSideTransitions({ transitions: false });
+
+        winResize = setTimeout(() => {
+            store.setSideTransitions({ transitions: true });
+        }, 500);
+    });
+});
+
+const Toast = Swal.mixin({
+    buttonsStyling: false,
+    target: "#page-container",
+    customClass: {
+        confirmButton: "btn btn-success m-1",
+        cancelButton: "btn btn-danger m-1",
+        input: "form-control",
+    },
+});
+
+watchEffect(() => {
+    let flashMessage = usePage().props.flashMessage
+
+    if (flashMessage.success) {
+        Toast.fire({
+            icon: "success",
+            html: flashMessage.success,
+        });
+    }
+
+    if (flashMessage.errors) {
+        Toast.fire({
+            icon: "error",
+            html: flashMessage.errors,
+        })
+    }
+})
+</script>
+
+<style lang="scss">
+// SweetAlert2
+@import "sweetalert2/dist/sweetalert2.min.css";
+</style>
+
+<template>
+    <AppLayouts>
+        <div id="page-container" :class="classContainer">
+
+            <!-- Sidebar -->
+            <BaseSidebar v-if="store.layout.sidebar" :with-mini-nav="sidebarWithMiniNav">
+                <template #header>
+                    <slot name="sidebar-header"></slot>
+                </template>
+
+                <template #header-extra>
+                    <slot name="sidebar-header-extra"></slot>
+                </template>
+
+                <template #content>
+                    <slot name="sidebar-content"></slot>
+                </template>
+            </BaseSidebar>
+            <!-- END Sidebar -->
+
+            <!-- Header -->
+            <BaseHeader v-if="store.layout.header">
+                <template #content-left>
+                    <slot name="header-content-left"></slot>
+                </template>
+
+                <template #content-right>
+                    <slot name="header-content-right"></slot>
+                </template>
+
+                <template #content>
+                    <slot name="header-content"></slot>
+                </template>
+                <slot name="header"></slot>
+            </BaseHeader>
+            <!-- END Header -->
+
+            <!-- Main Container -->
+            <main id="main-container">
+                <slot />
+            </main>
+            <!-- END Main Container -->
+
+            <!-- Footer -->
+            <BaseFooter v-if="store.layout.footer">
+                <template #content-left>
+                    <slot name="footer-content-left"></slot>
+                </template>
+
+                <template #content-right>
+                    <slot name="footer-content-right"></slot>
+                </template>
+                <slot name="footer"></slot>
+            </BaseFooter>
+            <!-- END Footer -->
+        </div>
+    </AppLayouts>
+</template>
