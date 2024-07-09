@@ -26,6 +26,7 @@ use App\Http\Controllers\ProfileController;
 //     ]);
 // });
 
+
 Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
