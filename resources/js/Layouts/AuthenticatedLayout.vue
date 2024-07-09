@@ -101,9 +101,9 @@ onMounted(() => {
 const Toast = Swal.mixin({
     buttonsStyling: false,
     target: "#page-container",
+    confirmButtonText: "Oke Go it!",
     customClass: {
         confirmButton: "btn btn-success m-1",
-        cancelButton: "btn btn-danger m-1",
         input: "form-control",
     },
 });
@@ -121,7 +121,7 @@ watchEffect(() => {
     if (flashMessage.errors) {
         Toast.fire({
             icon: "error",
-            html: flashMessage.errors,
+            html: Object.keys(usePage().props.errors),
         })
     }
 })

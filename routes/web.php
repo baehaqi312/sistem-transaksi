@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
     
     // Manajemen Users
-    Route::resource('users', UsersController::class);
+    Route::resource('users', UsersController::class)->except('craate', 'edit');
 });
 
 require __DIR__.'/auth.php';

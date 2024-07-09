@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseBlock from '@/Components/BaseBlock.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
+import CretaeUsers from './Create.vue'
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { watch, reactive, computed, onMounted, onUnmounted, ref } from 'vue';
 import { cloneDeep, debounce, pickBy } from 'lodash';
@@ -13,20 +14,20 @@ const props = defineProps({
     filters: Object,
 });
 
-// const page = usePage()
-// const users = computed(() => page.props.users)
-
-// Helper variables
 const orderSearch = ref(false);
 
+const filters = reactive({
+    search: props.filters.search,
+})
+
 const data = reactive({
-    search: props.filters.search
+    createUser: false
 })
 
 watch(
-    () => cloneDeep(data),
+    () => cloneDeep(filters),
     debounce(() => {
-        const params = pickBy(data);
+        const params = pickBy(filters);
         router.get(route('users.index'), params, {
             replace: true,
             preserveState: true,
@@ -40,6 +41,8 @@ watch(
 
     <Head title="Pengguna" />
     <AuthenticatedLayout>
+        <CretaeUsers title="Create Resume Pasien" :show="data.createUser"
+                @close="data.createUser = false" />
         <!-- Hero -->
         <div class="content">
             <div
@@ -75,27 +78,17 @@ watch(
                             <i class="fa fa-search"></i>
                         </button>
                         <div class="dropdown d-inline-block">
-                            <button type="button" class="btn btn-sm btn-alt-secondary"
-                                id="dropdown-recent-orders-filters" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="fa fa-fw fa-flask"></i>
-                                Filters
-                                <i class="fa fa-angle-down ms-1"></i>
+                            <button @click="data.createUser = true" type="button" class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-plus me-1"></i>
+                                Tambah Users
                             </button>
-                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-                                aria-labelledby="dropdown-recent-orders-filters">
-                                <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                                    href="javascript:void(0)">
-                                    All
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </template>
 
                 <template #content>
                     <div v-if="orderSearch" class="block-content border-bottom">
-                        <Search v-model="data.search" />
+                        <Search v-model="filters.search" />
                     </div>
                     <div class="block-content block-content-full">
                         <!-- Pengguna Table -->
@@ -133,6 +126,9 @@ watch(
                                                 Admin Keuangan
                                             </p>
                                             <p v-if="user.role === 3" class="fs-sm fw-medium text-muted mb-0">
+                                                Direktur Keuangan
+                                            </p>
+                                            <p v-if="user.role === 4" class="fs-sm fw-medium text-muted mb-0">
                                                 Pengguna
                                             </p>
                                         </td>
@@ -144,25 +140,12 @@ watch(
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Completed</span>
                                         </td>
                                         <td class="text-center">
-                                            <div class="dropdown d-inline-block">
-                                                <button type="button" class="btn btn-sm btn-alt-secondary"
-                                                    id="dropdown-recent-orders-filters" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Actions
-                                                    <i class="fa fa-angle-down ms-1"></i>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
-                                                    aria-labelledby="dropdown-recent-orders-filters">
-                                                    <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                                                        href="javascript:void(0)">
-                                                        Edit
-                                                    </a>
-                                                    <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                                                        href="javascript:void(0)">
-                                                        Delete
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <button type="button" class="btn btn-sm btn-alt-secondary">
+                                                <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-alt-secondary ms-2">
+                                                <i class="fa fa-fw fa-times"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
