@@ -97,7 +97,7 @@ onUnmounted(() => {
 
             <div class="mb-3">
                 <InputLabel for="role" value="Role Pengguna" />
-                <select class="form-select" v-model="form.role" id="role">
+                <select class="form-select" v-model="form.role" id="role" placeholder="Password Confirmation">
                     <option value="1">Super Admin</option>
                     <option value="2">Direktur Keuangan</option>
                     <option value="3">Admin Keuangan</option>

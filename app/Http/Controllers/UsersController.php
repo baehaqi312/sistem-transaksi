@@ -68,14 +68,27 @@ class UsersController extends Controller
             ]);
             DB::commit();
     
-            return back()->with('success', $user->name . ' sukses diupdate');
+            return back()->with('success', $user->name . ' Sukses Diupdate');
 
         } catch (\Throwable $th) {
             DB::rollBack();
 
             return back()->with('errors', $th->getMessage());
         }
-        
+    }
 
+    public function destroy(User $user)
+    {
+        try {
+
+            $user->delete();
+
+            return back()->with('success', $user->name . ' Sukses Dihapus');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return back()->with('errors', $th->getMessage());
+        }
     }
 }

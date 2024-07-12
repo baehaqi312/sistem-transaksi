@@ -5,6 +5,7 @@ import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import CretaeUsers from './Create.vue'
 import UpdateUsers from './Update.vue'
+import DeleteUsers from './Delete.vue'
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { watch, reactive, computed, onMounted, onUnmounted, ref } from 'vue';
 import { cloneDeep, debounce, pickBy } from 'lodash';
@@ -24,7 +25,8 @@ const filters = reactive({
 const data = reactive({
     user: null,
     createModal: false,
-    updateModal: false
+    updateModal: false,
+    deleteModal: false
 })
 
 watch(
@@ -48,6 +50,8 @@ watch(
                 @close="data.createModal = false" />
         <UpdateUsers title="Update Resume Pasien" :show="data.updateModal"
         @close="data.updateModal = false" :user="data.user"/>
+        <DeleteUsers title="Update Resume Pasien" :show="data.deleteModal"
+        @close="data.deleteModal = false" :user="data.user"/>
         <!-- Hero -->
         <div class="content">
             <div
@@ -101,56 +105,68 @@ watch(
                             <table class="table table-hover table-vcenter" v-if="users.data.length > 0">
                                 <thead>
                                     <tr>
-                                        <th class="d-none d-xl-table-cell text-center">Avatar</th>
-                                        <th>Nama</th>
+                                        <th>Pengguna</th>
+                                        <th class="text-center">Status</th>
                                         <th class="d-none d-sm-table-cell">Email</th>
-                                        <th class="d-none d-sm-table-cell">Status</th>
                                         <th class="text-center">Value</th>
                                     </tr>
                                 </thead>
                                 <tbody class="fs-sm">
                                     <tr v-for="(user, index) in   users.data  " :key="index">
-                                        <td class="d-none d-xl-table-cell text-center">
-                                            <img class="img-avatar img-avatar48"
-                                                :src="`https://ui-avatars.com/api/?name=${user.name}&background=2356d7`"
-                                                alt="avatar">
-                                        </td>
-                                        <!-- <td>
-                                            <a class="fw-semibold" href="javascript:void(0)">
-                                                ORD.00925
-                                            </a>
-                                            <p class="fs-sm fw-medium text-muted mb-0">Premium</p>
-                                        </td> -->
                                         <td>
-                                            <a class="fw-semibold" href="javascript:void(0)">{{ user.name }}</a>
-                                            <p v-if="user.role === 1"
-                                                class="fs-sm fw-medium text-danger text-muted mb-0">
-                                                Super Admin
-                                            </p>
-                                            <p v-if="user.role === 2" class="fs-sm fw-medium text-muted mb-0">
-                                                Admin Keuangan
-                                            </p>
-                                            <p v-if="user.role === 3" class="fs-sm fw-medium text-muted mb-0">
-                                                Direktur Keuangan
-                                            </p>
-                                            <p v-if="user.role === 4" class="fs-sm fw-medium text-muted mb-0">
-                                                Pengguna
-                                            </p>
+                                            <div class="d-flex">
+                                                <div class="d-none d-xl-table-cell text-center">
+                                                    <img class="img-avatar img-avatar48"
+                                                        :src="`https://ui-avatars.com/api/?name=${user.name}&font-size=0.33`"
+                                                        alt="avatar">
+                                                </div>
+                                                <div class="d-inline-flex flex-column ms-0 ms-sm-3 w-auto">
+                                                    <a class="fw-semibold mb-1" href="javascript:void(0)">{{ user.name }}</a>
+                                                    <div v-if="user.role === 1"
+                                                        class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                        Super Admin
+                                                    </div>
+                                                    <div v-if="user.role === 2" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                        Direktur Keuangan
+                                                    </div>
+                                                    <div v-if="user.role === 3" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                        Admin Keuangan
+                                                    </div>
+                                                    <div v-if="user.role === 4" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                        Pelanggan
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span
+                                                class="fw-semibold d-inline-block text-success">
+                                                <i class="fa-solid fa-user-check"></i>
+                                            </span>
                                         </td>
                                         <td class="d-none d-sm-table-cell fw-semibold text-muted">
                                             {{ user.email }}
                                         </td>
-                                        <td class="d-none d-sm-table-cell">
-                                            <span
-                                                class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Completed</span>
-                                        </td>
                                         <td class="text-center">
-                                            <button @click="(data.updateModal = true), data.user = user" type="button" class="btn btn-sm btn-alt-secondary">
-                                                <i class="fa fa-fw fa-pencil-alt"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-alt-secondary ms-2">
-                                                <i class="fa fa-fw fa-times"></i>
-                                            </button>
+                                            <div class="dropdown d-inline-block">
+                                                <button type="button" class="btn btn-sm btn-alt-secondary"
+                                                    id="dropdown-recent-orders-filters" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    <strong><i class="fa-solid fa-ellipsis-vertical"></i></strong>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+                                                    aria-labelledby="dropdown-recent-orders-filters">
+                                                    <a type="button" class="dropdown-item fw-medium d-flex align-items-center"
+                                                        @click="(data.updateModal = true), data.user = user">
+                                                        <i class="fa-solid fa-envelope me-3"></i>
+                                                        Ubah E-Mail Pengguna
+                                                    </a>
+                                                    <a type="button" class="dropdown-item fw-medium d-flex align-items-center" @click="(data.deleteModal = true), data.user = user">
+                                                        <i class="fa-solid fa-user-lock me-3"></i>
+                                                        Delete Pengguna
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
