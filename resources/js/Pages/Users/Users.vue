@@ -4,6 +4,7 @@ import BaseBlock from '@/Components/BaseBlock.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import CretaeUsers from './Create.vue'
+import UpdateUsers from './Update.vue'
 import { Head, usePage, router } from '@inertiajs/vue3';
 import { watch, reactive, computed, onMounted, onUnmounted, ref } from 'vue';
 import { cloneDeep, debounce, pickBy } from 'lodash';
@@ -21,7 +22,9 @@ const filters = reactive({
 })
 
 const data = reactive({
-    createUser: false
+    user: null,
+    createModal: false,
+    updateModal: false
 })
 
 watch(
@@ -41,8 +44,10 @@ watch(
 
     <Head title="Pengguna" />
     <AuthenticatedLayout>
-        <CretaeUsers title="Create Resume Pasien" :show="data.createUser"
-                @close="data.createUser = false" />
+        <CretaeUsers title="Create Resume Pasien" :show="data.createModal"
+                @close="data.createModal = false" />
+        <UpdateUsers title="Update Resume Pasien" :show="data.updateModal"
+        @close="data.updateModal = false" :user="data.user"/>
         <!-- Hero -->
         <div class="content">
             <div
@@ -78,7 +83,7 @@ watch(
                             <i class="fa fa-search"></i>
                         </button>
                         <div class="dropdown d-inline-block">
-                            <button @click="data.createUser = true" type="button" class="btn btn-sm btn-success">
+                            <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-plus me-1"></i>
                                 Tambah Users
                             </button>
@@ -140,7 +145,7 @@ watch(
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Completed</span>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-alt-secondary">
+                                            <button @click="(data.updateModal = true), data.user = user" type="button" class="btn btn-sm btn-alt-secondary">
                                                 <i class="fa fa-fw fa-pencil-alt"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-alt-secondary ms-2">
