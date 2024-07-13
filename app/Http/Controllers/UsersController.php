@@ -22,7 +22,7 @@ class UsersController extends Controller
             $users->orwhere('email', 'LIKE', '%' . $request->search . '%');
         }
 
-        return Inertia::render('Users/Users', [
+        return Inertia::render('Dashboard/Users/Users', [
             'users' => $users->paginate(),
             'filters' => $request->all(['search'])
         ]);

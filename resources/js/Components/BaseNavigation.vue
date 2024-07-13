@@ -71,11 +71,38 @@ function linkClicked(e, submenu) {
         <span class="nav-main-link-name">Log Pengguna</span>
       </NavLink>
     </li>
-    <li class="nav-main-heading">Master Data</li>
+    <li class="nav-main-heading">PRODUCT & SERVICE</li>
+    <li class="nav-main-item">
+      <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
+        <!-- <i class="nav-main-link-icon si si-energy"></i> -->
+        <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
+        <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
+        <span class="nav-main-link-name">Layanan</span>
+      </a>
+      <ul class="nav-main-submenu">
+        <li class="nav-main-item">
+          <NavLink href="#">
+            <span class="nav-main-link-name">Daftar Layanan</span>
+          </NavLink>
+        </li>
+        <li class="nav-main-item">
+          <NavLink :href="route('sub_service.index')" :active="route().current('sub_service.index')" @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Daftar Kategori</span>
+          </NavLink>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">
       <NavLink href="#">
-        <i class="nav-main-link-icon si si-speedometer"></i>
-        <span class="nav-main-link-name">Peran Pengguna</span>
+        <i class="nav-main-link-icon far fa-file"></i>
+        <span class="nav-main-link-name">Laporan</span>
+      </NavLink>
+    </li>
+    <li class="nav-main-item">
+      <NavLink href="#">
+        <i class="nav-main-link-icon far fa-money-bill-1"></i>
+        <span class="nav-main-link-name">Uang Masuk</span>
       </NavLink>
     </li>
   </ul>

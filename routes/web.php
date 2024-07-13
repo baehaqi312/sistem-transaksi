@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\SubServiceController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     
     // Manajemen Users
     Route::resource('users', UsersController::class)->except('craate', 'edit');
+
+    // Manajemen Users
+    Route::resource('sub_service', SubServiceController::class)->except('craate', 'edit');
 });
 
 require __DIR__.'/auth.php';
