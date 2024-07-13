@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\CategoryService;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -70,7 +71,7 @@ class CategoryServiceController extends Controller
      */
     public function edit(CategoryService $categoryService)
     {
-        //
+        
     }
 
     /**
@@ -78,7 +79,20 @@ class CategoryServiceController extends Controller
      */
     public function update(Request $request, CategoryService $categoryService)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+    
+        $categoryService->name = $request->name;
+        $categoryService->save();
+
+        // $service = Team::find($user->service->id);
+
+        $service = Service::where('category_id', $categoryService->id)->firstOrCreate(['category_id' => $categoryService->id]);
+        // $service->category_id = $request->service;
+        $service->save();
+    
+        return redirect()->back()->with('success', 'Service updated successfully');
     }
 
     /**
@@ -86,6 +100,13 @@ class CategoryServiceController extends Controller
      */
     public function destroy(CategoryService $categoryService)
     {
-        //
+
+        // Delete related rows in the `services` table via the relationship
+        $categoryService->service()->delete();
+
+        // Then, delete the category
+        $categoryService->delete();
+
+        return back()->with('success', $categoryService->name . ' Sukses Dihapus');
     }
 }

@@ -4,8 +4,8 @@ import BaseBlock from '@/Components/BaseBlock.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import CreateCategoryService from './Create.vue'
-// import UpdateUsers from './Update.vue'
-// import DeleteUsers from './Delete.vue'
+import UpdateCategoryService from './Update.vue'
+import DeleteCategoryService from './Delete.vue'
 import { Head, usePage, router, Link } from '@inertiajs/vue3';
 import { watch, reactive, computed, onMounted, onUnmounted, ref } from 'vue';
 import { cloneDeep, debounce, pickBy } from 'lodash';
@@ -25,7 +25,7 @@ const filters = reactive({
 })
 
 const data = reactive({
-    user: null,
+    category_service: null,
     createModal: false,
     updateModal: false,
     deleteModal: false
@@ -38,10 +38,10 @@ const data = reactive({
     <AuthenticatedLayout>
         <CreateCategoryService title="Create Resume Pasien" :show="data.createModal"
                 @close="data.createModal = false" />
-        <!-- <UpdateUsers title="Update Resume Pasien" :show="data.updateModal"
-        @close="data.updateModal = false" :user="data.user"/> -->
-        <!-- <DeleteUsers title="Update Resume Pasien" :show="data.deleteModal"
-        @close="data.deleteModal = false" :user="data.user"/> -->
+        <UpdateCategoryService title="Update Resume Pasien" :show="data.updateModal"
+        @close="data.updateModal = false" :category_service="data.category_service"/>
+        <DeleteCategoryService title="Update Resume Pasien" :show="data.deleteModal"
+        @close="data.deleteModal = false" :category_service="data.category_service"/>
         <!-- Hero -->
         <div class="">
             <div class="content content-full">
@@ -102,21 +102,21 @@ const data = reactive({
                                     </tr>
                                 </thead>
                                 <tbody class="fs-sm">
-                                    <tr v-for="(user, index) in   category_services.data  " :key="index">
+                                    <tr v-for="(items, index) in   category_services.data  " :key="index">
                                         <!-- <td>
                                             <div class="d-flex">
-                                                <img class="img-avatar img-avatar48" :src="`storage/${user.icon}`" :alt="user.name">
+                                                <img class="img-avatar img-avatar48" :src="`storage/${items.icon}`" :alt="items.name">
                                             </div>
                                         </td> -->
                                         <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                                            {{ user.name }}
+                                            {{ items.name }}
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-sm btn-alt-secondary">
+                                                <button @click="(data.updateModal = true), data.category_service = items" type="button" class="btn btn-sm btn-warning">
                                                     <i class="fa fa-fw fa-pencil-alt"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-sm btn-alt-secondary">
+                                                <button @click="(data.deleteModal = true), data.category_service = items" type="button" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-fw fa-times"></i>
                                                 </button>
                                             </div>
