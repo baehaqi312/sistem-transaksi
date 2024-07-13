@@ -86,8 +86,13 @@ function linkClicked(e, submenu) {
           </NavLink>
         </li>
         <li class="nav-main-item">
-          <NavLink :href="route('sub_service.index')" :active="route().current('sub_service.index')" @click="linkClicked($event, false)">
-            <span class="nav-main-link-name">Daftar Kategori</span>
+          <NavLink :href="route('service.index')" :active="route().current('service.index')" @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Daftar Service</span>
+          </NavLink>
+        </li>
+        <li class="nav-main-item">
+          <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')" @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Daftar Kategori Service</span>
           </NavLink>
         </li>
       </ul>

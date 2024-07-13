@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoryServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $category_services = CategoryService::query();
+
+        if ($request->has('search')) {
+            $category_services->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        return Inertia::render('Dashboard/CategoryService/Index', [
+            'category_services' => $category_services->paginate(10),
+            'filters' => $request->all(['search'])
+        ]);
     }
 
     /**
@@ -28,7 +40,21 @@ class CategoryServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // $imageFile = $request->file('image');
+        // $imageName = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
+        // $imageFile->storeAs('public/images', $imageName);
+
+        $category_services = new CategoryService();
+        $category_services->name = $request->name;
+        // $category_services->icon = 'images/' . $imageName;
+        $category_services->save();
+
+        return redirect()->back()->with('success', 'Category Service uploaded successfully');
     }
 
     /**

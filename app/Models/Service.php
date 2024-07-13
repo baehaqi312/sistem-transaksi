@@ -19,7 +19,7 @@ class Service extends Model
         'name',
         'description',
         'price',
-        'duration',
+        // 'duration',
     ];
 
     public function subservices()

@@ -22,6 +22,7 @@
         "nprogress": "^0.2.0",
         "pinia": "^2.1.7",
         "simplebar": "^6.2.7",
-        "sweetalert2": "^11.12.1"
+        "sweetalert2": "^11.12.1",
+        "vue-select": "^4.0.0-beta.3"
     }
 }
