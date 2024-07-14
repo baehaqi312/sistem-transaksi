@@ -109,6 +109,7 @@ watch(
                                         <th>Pengguna</th>
                                         <th class="text-center">Status</th>
                                         <th class="d-none d-sm-table-cell">Email</th>
+                                        <th class="d-none d-sm-table-cell">Telephone</th>
                                         <th class="text-center">Value</th>
                                     </tr>
                                 </thead>
@@ -147,6 +148,9 @@ watch(
                                         </td>
                                         <td class="d-none d-sm-table-cell fw-semibold text-muted">
                                             {{ user.email }}
+                                        </td>
+                                        <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                                            {{ user.phone }}
                                         </td>
                                         <td class="text-center">
                                             <div class="dropdown d-inline-block">

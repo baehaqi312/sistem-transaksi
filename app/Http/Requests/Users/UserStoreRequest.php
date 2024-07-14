@@ -26,6 +26,7 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:'. User::Class,
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => 'required|string',
             'avatar' => 'image|mimes:png,jpg,jpeg',

@@ -57,20 +57,22 @@ function linkClicked(e, submenu) {
         <span class="nav-main-link-name">Dasbor</span>
       </NavLink>
     </li>
-    <li class="nav-main-heading">Manajemen Sistem</li>
-    <li class="nav-main-item">
-      <NavLink :href="route('users.index')" :active="route().current('users.index')"
-        @click="linkClicked($event, false)">
-        <i class="nav-main-link-icon si si-speedometer"></i>
-        <span class="nav-main-link-name">Pengguna Sistem</span>
-      </NavLink>
-    </li>
-    <li class="nav-main-item">
-      <NavLink href="#">
-        <i class="nav-main-link-icon si si-speedometer"></i>
-        <span class="nav-main-link-name">Log Pengguna</span>
-      </NavLink>
-    </li>
+    <template v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2 ">
+      <li class="nav-main-heading">Manajemen Sistem</li>
+      <li class="nav-main-item">
+        <NavLink :href="route('users.index')" :active="route().current('users.index')"
+          @click="linkClicked($event, false)">
+          <i class="nav-main-link-icon si si-speedometer"></i>
+          <span class="nav-main-link-name">Pengguna Sistem</span>
+        </NavLink>
+      </li>
+      <li class="nav-main-item">
+        <NavLink href="#">
+          <i class="nav-main-link-icon si si-speedometer"></i>
+          <span class="nav-main-link-name">Log Pengguna</span>
+        </NavLink>
+      </li>
+    </template>
     <li class="nav-main-heading">PRODUCT & SERVICE</li>
     <li class="nav-main-item">
       <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">

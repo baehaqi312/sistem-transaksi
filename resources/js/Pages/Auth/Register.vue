@@ -11,6 +11,7 @@ import { useTemplateStore } from "@/stores/template";
 const form = useForm({
     name: '',
     email: '',
+    phone: '',
     password: '',
     password_confirmation: '',
 });
@@ -68,6 +69,12 @@ store.setColorTheme({
                                 name="login-username" placeholder="Email" :class="{ 'is-invalid': form.errors.email }"
                                 v-model="form.email" />
                             <InputError class="mt-2" :message="form.errors.email" />
+                        </div>
+                        <div class="mb-3">
+                            <TextInput id="phone" type="text" class="form-control form-control-alt form-control-lg"
+                                name="login-username" placeholder="No Telephone" :class="{ 'is-invalid': form.errors.phone }"
+                                v-model="form.phone" />
+                            <InputError class="mt-2" :message="form.errors.phone" />
                         </div>
                         <div class="mb-3">
                             <TextInput id="password" type="password"

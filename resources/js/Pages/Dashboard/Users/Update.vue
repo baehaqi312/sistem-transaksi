@@ -19,6 +19,7 @@ const props = defineProps({
 const form = useForm({
     name:'',
     email:'',
+    phone:'',
     password:'',
     password_confirmation:'',
     role:''
@@ -55,6 +56,7 @@ watchEffect(() => {
         openModal()
         form.name = props.user.name
         form.email = props.user.email
+        form.phone = props.user.phone
         form.role = props.user.role
     }
 })
@@ -86,6 +88,12 @@ onUnmounted(() => {
                     <InputLabel for="email" value="Email" />
                     <TextInput id="email" ref="email" v-model="form.email" type="email" class="form-control" placeholder="Email" />
                     <InputError :message="form.errors.email" class="mt-1" />
+                </div>
+
+                <div class="mb-3">
+                    <InputLabel for="phone" value="phone" />
+                    <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control" placeholder="No Telephone" />
+                    <InputError :message="form.errors.phone" class="mt-1" />
                 </div>
     
                 <div class="mb-3">

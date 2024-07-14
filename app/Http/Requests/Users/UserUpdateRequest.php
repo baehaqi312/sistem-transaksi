@@ -26,6 +26,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->user,
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'passwprd_confirmation' => 'sometimes|required_with:password|same:password',
             // 'role' => 'nullable|string',

@@ -43,16 +43,16 @@ class CategoryServiceController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // $imageFile = $request->file('image');
-        // $imageName = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
-        // $imageFile->storeAs('public/images', $imageName);
+        $imageFile = $request->file('image');
+        $imageName = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
+        $imageFile->storeAs('public/images', $imageName);
 
         $category_services = new CategoryService();
         $category_services->name = $request->name;
-        // $category_services->icon = 'images/' . $imageName;
+        $category_services->images = 'images/' . $imageName;
         $category_services->save();
 
         return redirect()->back()->with('success', 'Category Service uploaded successfully');
@@ -79,9 +79,26 @@ class CategoryServiceController extends Controller
      */
     public function update(Request $request, CategoryService $categoryService)
     {
+        // $category_service = CategoryService::findOrFail($id);
+
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            // Delete the old image
+            if ($categoryService->images && Storage::exists('public/' . $categoryService->images)) {
+                Storage::delete('public/' . $categoryService->images);
+            }
+    
+            // Store the new image
+            $imageFile = $request->file('image');
+            $imageName = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
+            $imageFile->storeAs('public/images', $imageName);
+            $categoryService->images = 'images/' . $imageName;
+        }
+    
     
         $categoryService->name = $request->name;
         $categoryService->save();

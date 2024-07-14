@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 const form = useForm({
-    // image:null,
+    image:null,
     name:'',
 })
 
@@ -31,9 +31,9 @@ const createNewCategoryService = () => {
     })
 }
 
-// const handleFileUpload = (event) => {
-//   form.image = event.target.files[0];
-// };
+const handleFileUpload = (event) => {
+  form.image = event.target.files[0];
+};
 
 const emit = defineEmits(['close'])
 
@@ -73,10 +73,10 @@ onUnmounted(() => {
             </div>
         </template>
         <template #body>
-            <!-- <div class="mb-3">
+            <div class="mb-3">
                 <label class="form-label" for="image">icon</label>
                 <input class="form-control" type="file" @change="handleFileUpload" id="image" name="image" />
-            </div> -->
+            </div>
 
             <div class="mb-3">
                 <InputLabel for="name" value="name" />

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('category_services', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            // $table->string('icon');
+            $table->string('images');
+            // $table->integer('kategori');
             $table->timestamps();
         });
     }
@@ -24,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+
         Schema::dropIfExists('category_services');
     }
 };

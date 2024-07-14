@@ -17,6 +17,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+    image: null,
     name: '',
 })
 
@@ -26,13 +27,15 @@ const updateNewCategory = () => {
         preserveScroll:true,
         onSuccess: () => {
             closeModal()
-            form.reset()
         },
-        onFinish: () => form.reset(),
     })
 }
 
 const emit = defineEmits(['close'])
+
+const handleFileUpload = (event) => {
+  form.image = event.target.files[0];
+};
 
 onMounted(() => {
     modal.value = useModal('#updateCCategory')
@@ -52,6 +55,7 @@ watchEffect(() => {
     if (props.show) {
         openModal()
         form.name = props.category_service.name
+        form.image = props.category_service.images
     }
 })
 
@@ -71,6 +75,16 @@ onUnmounted(() => {
             </div>
         </template>
         <template #body>
+
+            <div class="mb-3" v-if="props.category_service">
+                <img v-if="props.category_service.images" class="img-fluid options-item" :src="`storage/${category_service.images}`":alt="props.category_service.name">
+                <!-- {{category_service.images}} -->
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="image">Images</label>
+                <input class="form-control" type="file" @change="handleFileUpload" id="image" name="image" />
+            </div>
 
             <div class="mb-3">
                 <InputLabel for="name" value="name" />

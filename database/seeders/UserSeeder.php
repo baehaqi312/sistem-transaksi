@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'id' => 1,
             'name' => 'Super Administrator',
             'email' => 'admin@admin.com',
+            'phone' => '+6283818062960',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),
             'role' => 1, // Admin Sistem

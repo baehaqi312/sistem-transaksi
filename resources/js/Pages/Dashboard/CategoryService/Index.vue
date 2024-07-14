@@ -66,77 +66,37 @@ const data = reactive({
         </div>
         <!-- END Hero -->
 
-        <!-- Pengguna -->
-        <div class="content">
-            <BaseBlock title="Pengguna">
-                <template #options>
-                    <div class="space-x-1">
-                        <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => {
-                                orderSearch = !orderSearch;
-                            }
-                                ">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <div class="dropdown d-inline-block">
-                            <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
-                                <i class="fa-solid fa-plus me-1"></i>
-                                Tambah Users
-                            </button>
-                        </div>
-                    </div>
-                </template>
-
-                <template #content>
-                    <div v-if="orderSearch" class="block-content border-bottom">
-                        <Search v-model="filters.search" />
-                    </div>
-                    <div class="block-content block-content-full">
-                        <!-- Pengguna Table -->
-                        <div class="table-responsive">
-                            <table class="table table-hover table-vcenter" v-if="category_services.data.length > 0">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>Pengguna</th> -->
-                                        <th class="d-none d-sm-table-cell">Nama</th>
-                                        <th class="text-end"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="fs-sm">
-                                    <tr v-for="(items, index) in   category_services.data  " :key="index">
-                                        <!-- <td>
-                                            <div class="d-flex">
-                                                <img class="img-avatar img-avatar48" :src="`storage/${items.icon}`" :alt="items.name">
-                                            </div>
-                                        </td> -->
-                                        <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                                            {{ items.name }}
-                                        </td>
-                                        <td class="text-end">
-                                            <div class="btn-group">
-                                                <button @click="(data.updateModal = true), data.category_service = items" type="button" class="btn btn-sm btn-warning">
-                                                    <i class="fa fa-fw fa-pencil-alt"></i>
-                                                </button>
-                                                <button @click="(data.deleteModal = true), data.category_service = items" type="button" class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-fw fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div v-else class="text-center fs-sm fw-medium text-muted">
-                                Tidak ada data user yang sesuai dengan pencarian.
+        <div class="content pt-2">
+            <div class="d-flex flex-sm-row justify-content-between align-items-center">
+                <h2 class="content-heading">Daftar Kategori Service</h2>
+                <div>
+                    <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-plus me-1"></i>
+                        Tambah Users
+                    </button>
+                </div>
+            </div>
+            <div class="row items-push">
+                <div class="col-md-4 animated fadeIn" v-for="(items, index) in category_services.data  " :key="index">
+                    <div class="options-container">
+                        <img class="img-fluid options-item" :src="`storage/${items.images}`" :alt="items.images" />
+                        <div class="options-overlay bg-black-75">
+                            <div class="options-overlay-content">
+                                <h3 class="h4 text-white mb-2">{{ items.name }}</h3>
+                                <div class="space-x-2">
+                                    <a class="btn btn-sm btn-alt-secondary" @click="(data.updateModal = true), data.category_service = items">
+                                        <i class="fa fa-pencil-alt text-primary me-1"></i> Edit
+                                    </a>
+                                    <a class="btn btn-sm btn-alt-secondary" @click="(data.deleteModal = true), data.category_service = items">
+                                        <i class="fa fa-times text-danger me-1"></i> Delete
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <!-- END Pengguna Table -->
                     </div>
-                    <div class="block-content block-content-full bg-body-light">
-                        <Pagination :data="props.category_services" />
-                    </div>
-                </template>
-            </BaseBlock>
+                </div>
+            </div>
         </div>
-        <!-- END Pengguna -->
 
 
     </AuthenticatedLayout>

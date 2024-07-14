@@ -67,7 +67,7 @@ const formatRupiah = (value) => {
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                     <div class="flex-grow-1">
                         <h1 class="h3 fw-bold mb-1">
-                            Daftar Kategori Service
+                            Daftar Layanan
                         </h1>
                     </div>
                     <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -76,7 +76,7 @@ const formatRupiah = (value) => {
                                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
-                                Daftar Kategori Service
+                                Daftar Layanan
                             </li>
                         </ol>
                     </nav>
@@ -87,7 +87,7 @@ const formatRupiah = (value) => {
 
         <!-- Pengguna -->
         <div class="content">
-            <BaseBlock title="Pengguna">
+            <BaseBlock title="Daftar Layanan">
                 <template #options>
                     <div class="space-x-1">
                         <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => {
@@ -99,7 +99,7 @@ const formatRupiah = (value) => {
                         <div class="dropdown d-inline-block">
                             <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-plus me-1"></i>
-                                Tambah Users
+                                Tambah Layanan
                             </button>
                         </div>
                     </div>
@@ -116,9 +116,9 @@ const formatRupiah = (value) => {
                                 <thead>
                                     <tr>
                                         <th>Categoy</th>
-                                        <th>Nama</th>
+                                        <!-- <th>Nama</th> -->
+                                        <th>Harga</th>
                                         <th class="d-none d-sm-table-cell">Description</th>
-                                        <th class="d-none d-sm-table-cell">Harga</th>
                                         <th class="text-end"></th>
                                     </tr>
                                 </thead>
@@ -129,17 +129,24 @@ const formatRupiah = (value) => {
                                                 <img class="img-avatar img-avatar48" :src="`storage/${user.icon}`" :alt="user.name">
                                             </div>
                                         </td> -->
-                                        <td class="fw-semibold text-muted">
-                                            {{ items.categoryservices.name }}
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="d-inline-flex flex-column ms-0 w-auto">
+                                                    <a class="fw-bold mb-1" href="javascript:void(0)">{{ items.name }}</a>
+                                                    <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1" v-if="items.categoryservices.name == 'Jasa Marketing Konten'">
+                                                        {{ items.categoryservices.name }}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="fw-semibold text-muted">
+                                        <!-- <td class="fw-semibold text-muted">
                                             {{ items.name }}
-                                        </td>
-                                        <td class="fw-semibold text-muted">
-                                            {{ items.description }}
-                                        </td>
+                                        </td> -->
                                         <td class="fw-semibold text-muted">
                                             {{ formatRupiah(items.price) }}
+                                        </td>
+                                        <td class="d-none d-sm-table-cell fw-semibold text-muted">
+                                            {{ items.description }}
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-group">
