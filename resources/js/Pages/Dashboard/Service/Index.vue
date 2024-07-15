@@ -133,7 +133,13 @@ const formatRupiah = (value) => {
                                             <div class="d-flex">
                                                 <div class="d-inline-flex flex-column ms-0 w-auto">
                                                     <a class="fw-bold mb-1" href="javascript:void(0)">{{ items.name }}</a>
-                                                    <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1" v-if="items.categoryservices.name == 'Jasa Marketing Konten'">
+                                                    <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-danger rounded-1 text-light" v-if="items.categoryservices.kode == 1">
+                                                        {{ items.categoryservices.name }}
+                                                    </div>
+                                                    <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-warning rounded-1 text-light" v-if="items.categoryservices.kode == 2">
+                                                        {{ items.categoryservices.name }}
+                                                    </div>
+                                                    <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-succes rounded-1 text-light" v-if="items.categoryservices.kode == 3">
                                                         {{ items.categoryservices.name }}
                                                     </div>
                                                 </div>

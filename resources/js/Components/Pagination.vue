@@ -27,7 +27,7 @@ const goto = (link) => {
             <ul class="pagination pagination-sm mb-0">
                 <li class="page-item" v-for="(link, index) in data.links" :key="index"
                     :class="{ active: link.active, disabled: link.url == null }">
-                    <a class="page-link" @click="goto(link.url)" v-html="link.label"></a>
+                    <a type="button"class="page-link" @click="goto(link.url)" v-html="link.label"></a>
                 </li>
             </ul>
         </nav>

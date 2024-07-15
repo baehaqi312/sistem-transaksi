@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_services', function (Blueprint $table) {
+        Schema::create('order_layanan', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('images');
-            $table->integer('kode');
+            $table->char('service_id');
+            $table->char('user_id')->unique();
+            $table->string('title');
+            $table->mediumText('description');
+            $table->string('logo');
             $table->timestamps();
         });
     }
@@ -25,7 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('category_services');
+        Schema::dropIfExists('order_layanan');
     }
 };

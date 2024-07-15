@@ -41,9 +41,16 @@ class CategoryServiceController extends Controller
      */
     public function store(Request $request)
     {
+        // Find the maximum 'kode' value in the table
+        $maxKode = CategoryService::max('kode');
+
+        // Increment the 'kode' value by 1
+        $newKode = $maxKode + 1;
+
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            // 'kode' => 'required',
         ]);
 
         $imageFile = $request->file('image');
@@ -52,6 +59,7 @@ class CategoryServiceController extends Controller
 
         $category_services = new CategoryService();
         $category_services->name = $request->name;
+        $category_services->kode = $newKode;
         $category_services->images = 'images/' . $imageName;
         $category_services->save();
 
