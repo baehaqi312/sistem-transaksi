@@ -49,7 +49,7 @@ class CategoryServiceController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             // 'kode' => 'required',
         ]);
 
@@ -91,19 +91,19 @@ class CategoryServiceController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete the old image
-            if ($categoryService->images && Storage::exists('public/' . $categoryService->images)) {
+            // Hapus gambar lama jika ada
+            if ($categoryService->images) {
                 Storage::delete('public/' . $categoryService->images);
             }
-    
-            // Store the new image
+
             $imageFile = $request->file('image');
             $imageName = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
             $imageFile->storeAs('public/images', $imageName);
+
             $categoryService->images = 'images/' . $imageName;
         }
     

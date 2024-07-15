@@ -36,12 +36,11 @@ const data = reactive({
 
     <Head title="Pengguna" />
     <AuthenticatedLayout>
-        <CreateCategoryService title="Create Resume Pasien" :show="data.createModal"
-                @close="data.createModal = false" />
-        <UpdateCategoryService title="Update Resume Pasien" :show="data.updateModal"
-        @close="data.updateModal = false" :category_service="data.category_service"/>
-        <DeleteCategoryService title="Update Resume Pasien" :show="data.deleteModal"
-        @close="data.deleteModal = false" :category_service="data.category_service"/>
+        <CreateCategoryService title="Create Category" :show="data.createModal" @close="data.createModal = false" />
+        <UpdateCategoryService title="Update Category" :show="data.updateModal" @close="data.updateModal = false"
+            :category_service="data.category_service" />
+        <DeleteCategoryService title="Delete Category" :show="data.deleteModal" @close="data.deleteModal = false"
+            :category_service="data.category_service" />
         <!-- Hero -->
         <div class="">
             <div class="content content-full">
@@ -84,10 +83,12 @@ const data = reactive({
                             <div class="options-overlay-content">
                                 <h3 class="h4 text-white mb-2">{{ items.name }}</h3>
                                 <div class="space-x-2">
-                                    <a class="btn btn-sm btn-alt-secondary" @click="(data.updateModal = true), data.category_service = items">
+                                    <a class="btn btn-sm btn-alt-secondary"
+                                        @click="(data.updateModal = true), data.category_service = items">
                                         <i class="fa fa-pencil-alt text-primary me-1"></i> Edit
                                     </a>
-                                    <a class="btn btn-sm btn-alt-secondary" @click="(data.deleteModal = true), data.category_service = items">
+                                    <a class="btn btn-sm btn-alt-secondary"
+                                        @click="(data.deleteModal = true), data.category_service = items">
                                         <i class="fa fa-times text-danger me-1"></i> Delete
                                     </a>
                                 </div>

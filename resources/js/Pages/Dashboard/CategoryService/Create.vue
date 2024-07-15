@@ -15,14 +15,15 @@ const props = defineProps({
 })
 
 const form = useForm({
-    image:null,
-    name:'',
+    image: null,
+    name: '',
 })
 
+const image = ref(null);
 
 const createNewCategoryService = () => {
     form.post(route('category_service.store'), {
-        preserveScroll:true,
+        preserveScroll: true,
         onSuccess: () => {
             closeModal()
             form.reset()
@@ -32,7 +33,8 @@ const createNewCategoryService = () => {
 }
 
 const handleFileUpload = (event) => {
-  form.image = event.target.files[0];
+    image.value = event.target.files[0];
+    form.image = image.value;
 };
 
 const emit = defineEmits(['close'])
@@ -45,6 +47,8 @@ const closeModal = () => {
     modal.value.hide()
     emit('close')
     form.reset()
+    form.image = null;
+    image.value = null;
 }
 
 const openModal = () => {
@@ -80,7 +84,8 @@ onUnmounted(() => {
 
             <div class="mb-3">
                 <InputLabel for="name" value="name" />
-                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Name" />
+                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                    placeholder="Name" />
                 <InputError :message="form.errors.name" class="mt-1" />
             </div>
         </template>

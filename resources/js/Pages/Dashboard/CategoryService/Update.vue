@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useModal } from '@/directives/useModal';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 import { onMounted, onUnmounted, ref, watchEffect } from 'vue';
 import VueSelect from 'vue-select';
 
@@ -17,13 +17,22 @@ const props = defineProps({
 });
 
 const form = useForm({
-    image: null,
     name: '',
+    image: null,
 });
 
+const handleFileChange = (e) => {
+    form.image = e.target.files[0]
+    form.image_preview = URL.createObjectURL(e.target.files[0])
+}
+
 const updateNewCategory = () => {
-    form.put(route('category_service.update', props.category_service?.id), {
+    router.post(`category_service/${props.category_service?.id}`, {
+        _method: 'put',
+        name: form.name,
+        image: form.image,
         preserveScroll: true,
+    }, {
         onSuccess: () => {
             closeModal();
         },
@@ -52,8 +61,8 @@ const openModal = () => {
 watchEffect(() => {
     if (props.show) {
         openModal();
-        form.name = props.category_service?.name;
-        form.image = props.category_service?.images;
+        form.image = null;
+        form.name = props.category_service.name;
     }
 });
 
@@ -73,24 +82,29 @@ onUnmounted(() => {
             </div>
         </template>
         <template #body>
-            <div class="mb-3" v-if="props.category_service">
-                <img v-if="props.category_service.images" class="img-fluid options-item" :src="`storage/${category_service.images}`" :alt="props.category_service.name">
-            </div>
+            <form @submit.prevent="updateNewCategory">
+                <div class="mb-3" v-if="props.category_service">
+                    <img v-if="props.category_service.images" class="img-fluid options-item"
+                        :src="`storage/${props.category_service.images}`" :alt="props.category_service.name">
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="image">Images</label>
-                <input class="form-control" type="file" @change="e => form.image = e.target.files[0]" id="image" name="image" />
-            </div>
+                <div class="mb-3">
+                    <label class="form-label" for="image">Images</label>
+                    <input class="form-control" type="file" @change="handleFileChange" id="image" name="image" />
+                </div>
 
-            <div class="mb-3">
-                <InputLabel for="name" value="name" />
-                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Name" />
-                <InputError :message="form.errors.name" class="mt-1" />
-            </div>
+                <div class="mb-3">
+                    <InputLabel for="name" value="Name" />
+                    <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                        placeholder="Name" />
+                    <InputError :message="form.errors.name" class="mt-1" />
+                </div>
+            </form>
         </template>
         <template #footer>
             <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
-            <button class="btn btn-primary ms-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="updateNewCategory">
+            <button class="btn btn-primary ms-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                @click="updateNewCategory">
                 Simpan
             </button>
         </template>
