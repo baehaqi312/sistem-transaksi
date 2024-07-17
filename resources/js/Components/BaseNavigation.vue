@@ -57,7 +57,7 @@ function linkClicked(e, submenu) {
         <span class="nav-main-link-name">Dasbor</span>
       </NavLink>
     </li>
-    <template v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2 ">
+    <template v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
       <li class="nav-main-heading">Manajemen Sistem</li>
       <li class="nav-main-item">
         <NavLink :href="route('users.index')" :active="route().current('users.index')"
@@ -88,13 +88,21 @@ function linkClicked(e, submenu) {
           </NavLink>
         </li>
         <li class="nav-main-item">
-          <NavLink :href="route('service.index')" :active="route().current('service.index')" @click="linkClicked($event, false)">
+          <NavLink :href="route('service.index')" :active="route().current('service.index')"
+            @click="linkClicked($event, false)">
             <span class="nav-main-link-name">Daftar Service</span>
           </NavLink>
         </li>
         <li class="nav-main-item">
-          <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')" @click="linkClicked($event, false)">
+          <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')"
+            @click="linkClicked($event, false)">
             <span class="nav-main-link-name">Daftar Kategori Service</span>
+          </NavLink>
+        </li>
+        <li class="nav-main-item">
+          <NavLink :href="route('cart.index')" :active="route().current('cart.index')"
+            @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Keranjang</span>
           </NavLink>
         </li>
       </ul>

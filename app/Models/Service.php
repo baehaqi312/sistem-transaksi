@@ -36,4 +36,9 @@ class Service extends Model
     {
         return $this->belongsToMany(Transaction::class, 'client_id', 'service_id', 'id');
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class, 'services_id', 'id');
+    }
 }

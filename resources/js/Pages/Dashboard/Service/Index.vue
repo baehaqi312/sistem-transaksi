@@ -46,21 +46,30 @@ watch(
 );
 
 const formatRupiah = (value) => {
-  if (!value) return 'Rp 0';
-  return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (!value) return 'Rp 0';
+    return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
+
+const quantity = reactive({})
+
+const addToCart = (itemsId) => {
+    router.post(route('cart.store'), {
+        services_id: itemsId,
+        quantity: quantity[itemsId] || 1
+    })
+}
 </script>
 
 <template>
 
     <Head title="Pengguna" />
     <AuthenticatedLayout>
-        <CreateCategoryService title="Create Resume Pasien" :show="data.createModal"
-                @close="data.createModal = false" :category_service="props.category_service"/>
-        <UpdateService title="Update Resume Pasien" :show="data.updateModal"
-        @close="data.updateModal = false" :service="data.service" :category_service="props.category_service"/>
-        <DeleteService title="Update Resume Pasien" :show="data.deleteModal"
-        @close="data.deleteModal = false" :service="data.service"/>
+        <CreateCategoryService title="Create Resume Pasien" :show="data.createModal" @close="data.createModal = false"
+            :category_service="props.category_service" />
+        <UpdateService title="Update Resume Pasien" :show="data.updateModal" @close="data.updateModal = false"
+            :service="data.service" :category_service="props.category_service" />
+        <DeleteService title="Update Resume Pasien" :show="data.deleteModal" @close="data.deleteModal = false"
+            :service="data.service" />
         <!-- Hero -->
         <div class="">
             <div class="content content-full">
@@ -91,9 +100,9 @@ const formatRupiah = (value) => {
                 <template #options>
                     <div class="space-x-1">
                         <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => {
-                                orderSearch = !orderSearch;
-                            }
-                                ">
+            orderSearch = !orderSearch;
+        }
+            ">
                             <i class="fa fa-search"></i>
                         </button>
                         <div class="dropdown d-inline-block">
@@ -115,24 +124,23 @@ const formatRupiah = (value) => {
                             <table class="table table-hover table-vcenter" v-if="service.data.length > 0">
                                 <thead>
                                     <tr>
+                                        <th>Nama</th>
                                         <th>Categoy</th>
-                                        <!-- <th>Nama</th> -->
-                                        <th>Harga</th>
                                         <th class="d-none d-sm-table-cell">Description</th>
+                                        <th>Harga</th>
+                                        <th>Beli</th>
                                         <th class="text-end"></th>
                                     </tr>
                                 </thead>
                                 <tbody class="fs-sm">
                                     <tr v-for="(items, index) in service.data" :key="index">
-                                        <!-- <td>
-                                            <div class="d-flex">
-                                                <img class="img-avatar img-avatar48" :src="`storage/${user.icon}`" :alt="user.name">
-                                            </div>
-                                        </td> -->
                                         <td>
-                                            <div class="d-flex">
+                                            <a class="fw-bold mb-1" href="javascript:void(0)">{{ items.name }}</a>
+                                        </td>
+                                        <td>
+                                            {{ items.categoryservices.name }}
+                                            <!-- <div class="d-flex">
                                                 <div class="d-inline-flex flex-column ms-0 w-auto">
-                                                    <a class="fw-bold mb-1" href="javascript:void(0)">{{ items.name }}</a>
                                                     <div class="fs-xs m-0 p-1 px-2 d-inline-block bg-danger rounded-1 text-light" v-if="items.categoryservices.kode == 1">
                                                         {{ items.categoryservices.name }}
                                                     </div>
@@ -143,23 +151,33 @@ const formatRupiah = (value) => {
                                                         {{ items.categoryservices.name }}
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </td>
                                         <!-- <td class="fw-semibold text-muted">
                                             {{ items.name }}
                                         </td> -->
-                                        <td class="fw-semibold text-muted">
-                                            {{ formatRupiah(items.price) }}
-                                        </td>
                                         <td class="d-none d-sm-table-cell fw-semibold text-muted">
                                             {{ items.description }}
                                         </td>
+                                        <td class="fw-semibold text-muted">
+                                            {{ formatRupiah(items.price) }}
+                                        </td>
+                                        <td class="fw-semibold text-muted">
+                                            <form @submit.prevent="addToCart(items.id)">
+                                                <input type="hidden" name="service_id" :value="items.id">
+                                                <input type="number" v-model="quantity[items.id]" min="1"
+                                                    placeholder="Quantity">
+                                                <button type="submit">Add to Cart</button>
+                                            </form>
+                                        </td>
                                         <td class="text-end">
                                             <div class="btn-group">
-                                                <button @click="(data.updateModal = true), data.service = items" type="button" class="btn btn-sm btn-warning">
+                                                <button @click="(data.updateModal = true), data.service = items"
+                                                    type="button" class="btn btn-sm btn-warning">
                                                     <i class="fa fa-fw fa-pencil-alt"></i>
                                                 </button>
-                                                <button @click="(data.deleteModal = true), data.service = items" type="button" class="btn btn-sm btn-danger">
+                                                <button @click="(data.deleteModal = true), data.service = items"
+                                                    type="button" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-fw fa-times"></i>
                                                 </button>
                                             </div>

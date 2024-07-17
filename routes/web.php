@@ -3,11 +3,12 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubServiceController;
 use App\Http\Controllers\CategoryServiceController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('category_service', CategoryServiceController::class)->except('craate', 'edit');
     // CategoryService
     Route::resource('service', ServiceController::class)->except('craate', 'edit');
+
+    // CategoryService
+    Route::resource('cart', CartController::class);
 });
 
 require __DIR__.'/auth.php';
