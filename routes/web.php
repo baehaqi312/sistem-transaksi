@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubServiceController;
 use App\Http\Controllers\CategoryServiceController;
+use App\Http\Controllers\SoftwareDevelopmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,9 @@ Route::middleware('auth')->group(function () {
     // CategoryService
     Route::resource('cart', CartController::class);
     Route::resource('cartItem', CartItemController::class);
+
+    // CategoryService
+    Route::resource('software_development', SoftwareDevelopmentController::class);
 });
 
 require __DIR__.'/auth.php';

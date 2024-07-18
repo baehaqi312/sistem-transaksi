@@ -49,15 +49,6 @@ const formatRupiah = (value) => {
     if (!value) return 'Rp 0';
     return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
-
-const quantity = reactive({})
-
-const addToCart = (itemsId) => {
-    router.post(route('cart.store'), {
-        services_id: itemsId,
-        quantity: quantity[itemsId] || 1
-    })
-}
 </script>
 
 <template>
@@ -128,7 +119,6 @@ const addToCart = (itemsId) => {
                                         <th>Categoy</th>
                                         <th class="d-none d-sm-table-cell">Description</th>
                                         <th>Harga</th>
-                                        <th>Beli</th>
                                         <th class="text-end"></th>
                                     </tr>
                                 </thead>
@@ -161,14 +151,6 @@ const addToCart = (itemsId) => {
                                         </td>
                                         <td class="fw-semibold text-muted">
                                             {{ formatRupiah(items.price) }}
-                                        </td>
-                                        <td class="fw-semibold text-muted">
-                                            <form @submit.prevent="addToCart(items.id)">
-                                                <input type="hidden" name="service_id" :value="items.id">
-                                                <input type="hidden" v-model="quantity[items.id]" min="1"
-                                                    placeholder="Quantity">
-                                                <button type="submit">Add to Cart</button>
-                                            </form>
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-group">

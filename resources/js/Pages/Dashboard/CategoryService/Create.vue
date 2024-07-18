@@ -17,6 +17,7 @@ const props = defineProps({
 const form = useForm({
     image: null,
     name: '',
+    kode: ''
 })
 
 const image = ref(null);
@@ -87,6 +88,17 @@ onUnmounted(() => {
                 <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
                     placeholder="Name" />
                 <InputError :message="form.errors.name" class="mt-1" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="kode">Template</label>
+              <select class="form-select" v-model="form.kode" id="kode" name="kode">
+                <!-- <option selected>Open this select menu</option> -->
+                <option value="1">Software Development</option>
+                <option value="2">Digital Marketing</option>
+                <option value="3">Cloud Computing</option>
+                <option value="4">Internet of Things</option>
+              </select>
             </div>
         </template>
         <template #footer>

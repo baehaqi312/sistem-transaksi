@@ -55,7 +55,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Service updated successfully');
+        return redirect()->back()->with('success', 'Service Berhasil Ditambahkan ke Keranjang');
     }
 
     /**
@@ -99,6 +99,6 @@ class CartController extends Controller
 
         // Hapus item dari keranjang
         $cartItem->delete();
-        return back()->with('success', ' Sukses Dihapus');
+        return back()->with('success', 'Sukses Dihapus');
     }
 }
