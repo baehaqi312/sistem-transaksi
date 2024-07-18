@@ -24,4 +24,9 @@ class CartItem extends Model
     {
         return $this->belongsTo(Service::class, 'services_id', 'id');
     }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

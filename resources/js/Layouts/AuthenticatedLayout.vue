@@ -10,6 +10,8 @@ import { useTemplateStore } from "@/stores/template";
 import BaseHeader from "./partials/Header.vue";
 import BaseSidebar from "./partials/Sidebar.vue";
 import BaseFooter from "./partials/Footer.vue";
+import BaseSideOverlay from "./partials/SideOverlay.vue";
+
 
 // Component properties
 defineProps({
@@ -125,6 +127,8 @@ watchEffect(() => {
         })
     }
 })
+
+// const { props } = usePage();
 </script>
 
 <style lang="scss">
@@ -135,6 +139,28 @@ watchEffect(() => {
 <template>
     <AppLayouts>
         <div id="page-container" :class="classContainer">
+            <!-- Page Overlay -->
+            <div
+            id="page-overlay"
+            v-if="store.layout.sideOverlay && store.settings.pageOverlay"
+            @click="store.sideOverlay({ mode: 'close' })"
+            ></div>
+            <!-- END Page Overlay -->
+
+            <!-- Side Overlay -->
+            <BaseSideOverlay v-if="store.layout.sideOverlay" :cart="$page.props.cart">
+            <template #header>
+                <slot name="side-overlay-header"></slot>
+            </template>
+
+            <template #content>
+                <slot name="side-overlay-content"></slot>
+            </template>
+
+            <slot name="side-overlay"></slot>
+            </BaseSideOverlay>
+            <!-- END Side Overlay -->
+
 
             <!-- Sidebar -->
             <BaseSidebar v-if="store.layout.sidebar" :with-mini-nav="sidebarWithMiniNav">

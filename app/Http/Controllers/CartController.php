@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Service;
@@ -16,10 +17,17 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user'])->first();
+        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
         return Inertia::render('Dashboard/Cart/Index', [
             'cart' => $cart
         ]);
+    }
+
+    public function getCart()
+    {
+        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
+
+        return $cart;
     }
 
     /**
@@ -77,8 +85,19 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(CartItem $cartItem)
     {
+        /// Pastikan relasi cart ada
+        // if (!$cartItem->cart) {
+        //     return redirect()->route('cart.index')->withErrors(['error' => 'Cart not found.']);
+        // }
+
+        // Periksa apakah pengguna yang mencoba menghapus item adalah pemilik keranjang
+        // if ($cartItem->cart->user_id !== auth()->id()) {
+        //     return redirect()->route('cart.index')->withErrors(['error' => 'Unauthorized action.']);
+        // }
+
+        // Hapus item dari keranjang
         $cartItem->delete();
         return back()->with('success', ' Sukses Dihapus');
     }

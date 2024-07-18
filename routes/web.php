@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
 
     // CategoryService
     Route::resource('cart', CartController::class);
+    Route::resource('cartItem', CartItemController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -1,11 +1,15 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import { usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+
+const cart = computed(() => page.props.cart)
 
 // Main store and Router
 const store = useTemplateStore();
-
 
 const radioDarkMode = ref();
 
@@ -164,6 +168,17 @@ watch(
               </div>
             </div>
             <!-- END User Dropdown -->
+
+            <!-- Toggle Side Overlay -->
+            <button
+                type="button"
+                class="btn btn-sm btn-alt-secondary ms-2 space-x-1"
+                @click="store.sideOverlay({ mode: 'toggle' })"
+              >
+                <i class="fa fa-fw fa-cart-plus"></i>
+                <span v-if="cart && cart.items.length" class="text-primary">•</span>
+              </button>
+              <!-- END Toggle Side Overlay -->
           </div>
           <!-- END Right Section -->
         </slot>
