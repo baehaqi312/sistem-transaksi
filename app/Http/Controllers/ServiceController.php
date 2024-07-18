@@ -104,16 +104,10 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        try {
 
-            $service->delete();
+        $service->cartItems()->delete();
+        $service->delete();
 
-            return back()->with('success', $service->name . ' Sukses Dihapus');
-
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            return back()->with('errors', $th->getMessage());
-        }
+        return back()->with('success', $service->name . ' Sukses Dihapus');
     }
 }

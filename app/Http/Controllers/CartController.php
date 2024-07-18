@@ -16,7 +16,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->id())->with('items.product')->first();
+        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user'])->first();
         return Inertia::render('Dashboard/Cart/Index', [
             'cart' => $cart
         ]);
@@ -43,6 +43,7 @@ class CartController extends Controller
             $cart->items()->create([
                 'services_id' => $service->id,
                 'quantity' => $request->quantity,
+                'user_id' => auth()->id(),
             ]);
         }
 

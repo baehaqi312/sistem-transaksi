@@ -16,6 +16,10 @@ const props = defineProps({
 });
 
 console.info(props.cart)
+const formatRupiah = (value) => {
+    if (!value) return 'Rp 0';
+    return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
 </script>
 
 <template>
@@ -26,7 +30,7 @@ console.info(props.cart)
             <h1>Your Cart</h1>
             <ul v-if="cart && cart.items.length">
                 <li v-for="item in cart.items" :key="item.id">
-                    {{ item.product.name }} - {{ item.quantity }}
+                    {{ item.product.name }} - {{ formatRupiah(item.product.price) }}
                     <!-- <form :action="route('cart.destroy', item.id)" method="POST" @submit.prevent="removeItem(item.id)">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit">Remove</button>

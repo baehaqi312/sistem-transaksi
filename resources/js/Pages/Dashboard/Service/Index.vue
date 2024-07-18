@@ -165,7 +165,7 @@ const addToCart = (itemsId) => {
                                         <td class="fw-semibold text-muted">
                                             <form @submit.prevent="addToCart(items.id)">
                                                 <input type="hidden" name="service_id" :value="items.id">
-                                                <input type="number" v-model="quantity[items.id]" min="1"
+                                                <input type="hidden" v-model="quantity[items.id]" min="1"
                                                     placeholder="Quantity">
                                                 <button type="submit">Add to Cart</button>
                                             </form>
