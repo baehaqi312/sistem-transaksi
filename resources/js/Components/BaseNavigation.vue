@@ -84,11 +84,6 @@ function linkClicked(e, submenu) {
         </a>
         <ul class="nav-main-submenu">
           <li class="nav-main-item">
-            <NavLink href="#">
-              <span class="nav-main-link-name">Daftar Layanan</span>
-            </NavLink>
-          </li>
-          <li class="nav-main-item">
             <NavLink :href="route('service.index')" :active="route().current('service.index')"
               @click="linkClicked($event, false)">
               <span class="nav-main-link-name">Daftar Service</span>
@@ -100,16 +95,10 @@ function linkClicked(e, submenu) {
               <span class="nav-main-link-name">Daftar Kategori Service</span>
             </NavLink>
           </li>
-          <li class="nav-main-item">
-            <NavLink :href="route('cart.index')" :active="route().current('cart.index')"
-              @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Keranjang</span>
-            </NavLink>
-          </li>
         </ul>
       </li>
     </template>
-    <template v-if="$page.props.auth.user.role == 4 ">
+    <!-- <template v-if="$page.props.auth.user.role == 4 "> -->
       <li class="nav-main-item">
         <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
           <!-- <i class="nav-main-link-icon si si-energy"></i> -->
@@ -124,7 +113,7 @@ function linkClicked(e, submenu) {
             </NavLink>
           </li>
           <li class="nav-main-item">
-            <NavLink href="#">
+            <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')" @click="linkClicked($event, false)">
               <span class="nav-main-link-name">Digital Marketing</span>
             </NavLink>
           </li>
@@ -135,7 +124,7 @@ function linkClicked(e, submenu) {
           </li>
         </ul>
       </li>
-    </template>
+    <!-- </template> -->
     <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">
       <NavLink href="#">

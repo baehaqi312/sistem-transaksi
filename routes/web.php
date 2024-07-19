@@ -11,6 +11,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SubServiceController;
 use App\Http\Controllers\CategoryServiceController;
 use App\Http\Controllers\SoftwareDevelopmentController;
+use App\Http\Controllers\DigitalMarketingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('cart', CartController::class);
     Route::resource('cartItem', CartItemController::class);
 
-    // CategoryService
+    // Template
     Route::resource('software_development', SoftwareDevelopmentController::class);
+    Route::resource('digital_marketing', DigitalMarketingController::class);
 });
 
 require __DIR__.'/auth.php';

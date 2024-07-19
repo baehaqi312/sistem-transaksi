@@ -15,13 +15,13 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
-        return Inertia::render('Dashboard/Cart/Index', [
-            'cart' => $cart
-        ]);
-    }
+    // public function index()
+    // {
+    //     $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
+    //     return Inertia::render('Dashboard/Cart/Index', [
+    //         'cart' => $cart
+    //     ]);
+    // }
 
     public function getCart()
     {
