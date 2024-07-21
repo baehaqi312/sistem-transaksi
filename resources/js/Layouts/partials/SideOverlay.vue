@@ -2,7 +2,7 @@
 import { reactive, onMounted, onUnmounted } from "vue";
 import { useTemplateStore } from "@/stores/template";
 import BaseBlock from '@/Components/BaseBlock.vue';
-import { router, useForm } from "@inertiajs/vue3";
+import { router, useForm, Link } from "@inertiajs/vue3";
 
 // SimpleBar, for more info and examples you can check out https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-vue
 import SimpleBar from "simplebar";
@@ -120,7 +120,7 @@ const removeItem = (id) => {
                           <div class="flex-grow-1 fs-sm">
                             <div class="fw-semibold">{{ item.product.categoryservices.name }}</div>
                             <div>{{ item.product.name }}</div>
-                            <small class="text-muted">{{ formatRupiah(item.product.price) }}</small>
+                            <small class="text-muted">{{ formatRupiah(item.product.price * item.quantity) }}</small>
                           </div>
                           <form @submit.prevent="removeItem(item.id)">
                             <input type="hidden" name="_method" value="DELETE">
@@ -138,6 +138,14 @@ const removeItem = (id) => {
                         </div>
                       </li>
                     </ul>
+                    <!-- <button @click="checkout" v-if="cart && cart.items.length">Checkout</button> -->
+                    <!-- <button> -->
+                      <button type="button" class="btn btn-sm btn-alt-danger" v-if="cart && cart.items.length">
+                        <a :href="route('cart.index')" target="_blank">
+                          <span class="fs-sm fw-medium">Checkout</span>
+                        </a>
+                      </button>
+                    <!-- </button> -->
                   </BaseBlock>
                   <!-- END Activity -->
                   <!-- END Quick Settings -->

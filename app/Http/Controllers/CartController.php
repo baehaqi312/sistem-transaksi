@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\User;
+use App\Models\PaymentMethod;
 use Inertia\Inertia;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -15,13 +16,15 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
-    //     return Inertia::render('Dashboard/Cart/Index', [
-    //         'cart' => $cart
-    //     ]);
-    // }
+    public function index()
+    {
+        $paymentMethods = PaymentMethod::all();
+        $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
+        return Inertia::render('Dashboard/Cart/Index', [
+            'cart' => $cart,
+            'paymentMethods' => $paymentMethods
+        ]);
+    }
 
     public function getCart()
     {

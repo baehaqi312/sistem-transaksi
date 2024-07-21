@@ -12,6 +12,7 @@ use App\Http\Controllers\SubServiceController;
 use App\Http\Controllers\CategoryServiceController;
 use App\Http\Controllers\SoftwareDevelopmentController;
 use App\Http\Controllers\DigitalMarketingController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,9 @@ Route::middleware('auth')->group(function () {
     // Template
     Route::resource('software_development', SoftwareDevelopmentController::class);
     Route::resource('digital_marketing', DigitalMarketingController::class);
+
+    //Transaction
+    Route::resource('transactions', TransactionController::class);
 });
 
 require __DIR__.'/auth.php';

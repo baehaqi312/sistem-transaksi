@@ -125,6 +125,15 @@ function linkClicked(e, submenu) {
         </ul>
       </li>
     <!-- </template> -->
+
+    <li class="nav-main-heading">Data Keuangan</li>
+    <li class="nav-main-item">
+      <NavLink :href="route('transactions.index')" :active="route().current('transactions.index')" @click="linkClicked($event, false)">
+        <i class="nav-main-link-icon far fa-file"></i>
+        <span class="nav-main-link-name">Transaksi</span>
+      </NavLink>
+    </li>
+
     <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">
       <NavLink href="#">
