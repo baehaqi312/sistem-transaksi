@@ -17,17 +17,19 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::query();
+        $query = Transaction::with(['items.service', 'user']);
 
         if (Auth::user()->role === 4) {
-            $transactions->where('user_id', auth()->id());
+            $query->where('user_id', auth()->id());
         }
 
+        $transactions = $query->get();
 
         return Inertia::render('Dashboard/Transactions/Index', [
-            'transactions' => $transactions->with(['items.service', 'user'])->paginate(),
+            'transactions' => $transactions,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

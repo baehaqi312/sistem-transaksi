@@ -3,6 +3,27 @@ import { Link } from '@inertiajs/vue3';
 import { ref, watch, onMounted, computed } from "vue";
 import { useTemplateStore } from "@/stores/template";
 import { usePage } from '@inertiajs/vue3'
+import moment from 'moment';
+import 'moment/locale/id'; // Mengimpor locale bahasa Indonesia
+
+moment.locale('id'); // Mengatur locale bahasa Indonesia
+
+const currentDateTime = ref(moment().format('dddd, D MMMM YYYY'));
+
+// const updateDateTime = () => {
+//   currentDateTime.value = moment().format('dddd, D MMMM YYYY');
+// };
+
+const currentTime = ref(moment().format('HH:mm:ss'));
+
+const updateTime = () => {
+  currentTime.value = moment().format('HH:mm:ss');
+};
+
+onMounted(() => {
+  // setInterval(updateDateTime, 1000);
+  setInterval(updateTime, 1000);
+});
 
 const page = usePage()
 
@@ -91,6 +112,14 @@ watch(
                 </div>
               </form> -->
               <!-- END Search Form -->
+
+              <span type="button" class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light">
+                {{ currentDateTime }}
+              </span>
+
+              <span type="button" class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light ms-2">
+                {{ currentTime }}
+              </span>
             </slot>
           </div>
           <!-- END Left Section -->
