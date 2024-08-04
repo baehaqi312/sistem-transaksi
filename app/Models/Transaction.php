@@ -18,8 +18,9 @@ class Transaction extends Model
         'user_id',
         'total',
         'invoice_code',
-        'payment_method',
-        'status'
+        'status',
+        'midtrans_token'
+        
     ];
 
     public function items()

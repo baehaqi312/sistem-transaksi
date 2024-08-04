@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->char('user_id', 36);
             $table->string('invoice_code')->unique();
-            $table->string('payment_method')->nullable();
             $table->decimal('total', 10, 2);
+            $table->string('midtrans_token')->nullable();
             $table->string('status');
             $table->timestamps();
             

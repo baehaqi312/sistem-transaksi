@@ -77,7 +77,7 @@ const form = useForm({
 });
 
 const submit = () => {
-  form.post(route('transactions.store'));
+    form.post(route('transactions.store'));
 }
 
 console.info(props.paymentMethods)
@@ -137,18 +137,19 @@ const total = computed(() => {
                         <!-- Shipping Method -->
                         <BaseBlock title=" Pilih Pembayaran" content-class="space-y-3" :header-bg="false" content-full>
                             <div class="form-check form-block" v-for="(items, index) in paymentMethods" :key="index">
-                                <input type="radio" class="form-check-input" :id="items.name"
-                                    name="payment_method" :value="items.name" v-model="form.payment_method" />
+                                <input type="radio" class="form-check-input" :id="items.name" name="payment_method"
+                                    :value="items.name" v-model="form.payment_method" />
                                 <label class="form-check-label" :for="items.name">
                                     <span class="d-block fw-normal p-1">
                                         <div class="row align-items-center justify-content-between">
                                             <div class="col">
-                                                <span class="d-block fw-semibold mb-1">{{items.name}}</span>
+                                                <span class="d-block fw-semibold mb-1">{{ items.name }}</span>
                                                 <span class="d-block fs-sm fw-medium text-muted"><span
-                                                        class="fw-semibold">No :</span> ({{ items.account_number }})</span>
+                                                        class="fw-semibold">No :</span> ({{ items.account_number
+                                                    }})</span>
                                             </div>
                                             <div class="col text-end">
-                                                <img  :src="`assets/payment/${items.logo}`" alt="" style="width: 130px;">
+                                                <img :src="`assets/payment/${items.logo}`" alt="" style="width: 130px;">
                                             </div>
                                         </div>
                                     </span>
@@ -170,10 +171,12 @@ const total = computed(() => {
                                     <tbody>
                                         <tr v-for="item in cart.items" :key="item.id">
                                             <td class="ps-0">
-                                                <a class="fw-semibold" href="javascript:void(0)">{{ item.product.categoryservices.name }}</a>
+                                                <a class="fw-semibold"
+                                                    href="javascript:void(0)">{{ item.product.categoryservices.name }}</a>
                                                 <div class="fs-sm text-muted">{{ item.product.name }}</div>
                                             </td>
-                                            <td class="pe-0 fw-medium text-end">{{ formatRupiah(item.product.price * item.quantity) }}</td>
+                                            <td class="pe-0 fw-medium text-end">
+                                                {{ formatRupiah(item.product.price * item.quantity) }}</td>
                                         </tr>
                                     </tbody>
                                     <tbody>

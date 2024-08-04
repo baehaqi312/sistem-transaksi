@@ -8,10 +8,10 @@ import { router, useForm, Link } from "@inertiajs/vue3";
 import SimpleBar from "simplebar";
 
 const props = defineProps({
-    cart: {
-        type: Object,
-        required: true
-    }
+  cart: {
+    type: Object,
+    required: true
+  }
 });
 
 const form = useForm({})
@@ -40,12 +40,16 @@ onUnmounted(() => {
 });
 
 const formatRupiah = (value) => {
-    if (!value) return 'Rp 0';
-    return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  if (!value) return 'Rp 0';
+  return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
 const removeItem = (id) => {
   router.delete(route('cartItem.destroy', id));
+}
+
+const submit = () => {
+  router.post(route('transactions.store'));
 }
 </script>
 
@@ -58,29 +62,19 @@ const removeItem = (id) => {
         <slot name="header">
           <!-- User Avatar -->
           <a class="img-link me-1" href="javascript:void(0)">
-            <img
-              class="img-avatar img-avatar32"
-              src="/assets/media/avatars/avatar10.jpg"
-              alt="Avatar"
-            />
+            <img class="img-avatar img-avatar32" src="/assets/media/avatars/avatar10.jpg" alt="Avatar" />
           </a>
           <!-- END User Avatar -->
 
           <!-- User Info -->
           <div class="ms-2">
-            <a class="text-dark fw-semibold fs-sm" href="javascript:void(0)"
-              >{{ $page.props.auth.user.name }}</a
-            >
+            <a class="text-dark fw-semibold fs-sm" href="javascript:void(0)">{{ $page.props.auth.user.name }}</a>
           </div>
           <!-- END User Info -->
         </slot>
 
         <!-- Close Side Overlay -->
-        <button
-          type="button"
-          class="ms-auto btn btn-sm btn-alt-danger"
-          @click="store.sideOverlay({ mode: 'close' })"
-        >
+        <button type="button" class="ms-auto btn btn-sm btn-alt-danger" @click="store.sideOverlay({ mode: 'close' })">
           <i class="fa fa-fw fa-times"></i>
         </button>
         <!-- END Close Side Overlay -->
@@ -95,20 +89,10 @@ const removeItem = (id) => {
             <template #content>
               <div class="block-content tab-content overflow-hidden">
                 <!-- Overview Tab -->
-                <div
-                  class="tab-pane pull-x fade fade-left show active"
-                  id="so-overview"
-                  role="tabpanel"
-                  aria-labelledby="so-overview-tab"
-                  tabindex="0"
-                >
+                <div class="tab-pane pull-x fade fade-left show active" id="so-overview" role="tabpanel"
+                  aria-labelledby="so-overview-tab" tabindex="0">
                   <!-- Activity -->
-                  <BaseBlock
-                    title="Keranjang"
-                    header-bg
-                    transparent
-                    btn-option-content
-                  >
+                  <BaseBlock title="Keranjang" header-bg transparent btn-option-content>
                     <ul class="nav-items mb-0" v-if="cart && cart.items.length">
                       <li v-for="(item, index) in cart.items" :key="index">
                         <div class="text-dark d-flex py-2 justify-content-center align-items-center">
@@ -124,7 +108,8 @@ const removeItem = (id) => {
                           </div>
                           <form @submit.prevent="removeItem(item.id)">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button class="btn btn-danger btn-sm" type="submit"><i class="far fa-trash-can"></i></button>
+                            <button class="btn btn-danger btn-sm" type="submit"><i
+                                class="far fa-trash-can"></i></button>
                           </form>
                         </div>
                       </li>
@@ -140,11 +125,11 @@ const removeItem = (id) => {
                     </ul>
                     <!-- <button @click="checkout" v-if="cart && cart.items.length">Checkout</button> -->
                     <!-- <button> -->
-                      <button type="button" class="btn btn-sm btn-alt-danger" v-if="cart && cart.items.length">
-                        <a :href="route('cart.index')" target="_blank">
-                          <span class="fs-sm fw-medium">Checkout</span>
-                        </a>
+                    <form @submit.prevent="submit">
+                      <button type="submit" class="btn btn-sm btn-alt-danger" v-if="cart && cart.items.length">
+                        <span class="fs-sm fw-medium">Checkout</span>
                       </button>
+                    </form>
                     <!-- </button> -->
                   </BaseBlock>
                   <!-- END Activity -->

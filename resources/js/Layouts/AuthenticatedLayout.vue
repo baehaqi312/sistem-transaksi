@@ -140,24 +140,21 @@ watchEffect(() => {
     <AppLayouts>
         <div id="page-container" :class="classContainer">
             <!-- Page Overlay -->
-            <div
-            id="page-overlay"
-            v-if="store.layout.sideOverlay && store.settings.pageOverlay"
-            @click="store.sideOverlay({ mode: 'close' })"
-            ></div>
+            <div id="page-overlay" v-if="store.layout.sideOverlay && store.settings.pageOverlay"
+                @click="store.sideOverlay({ mode: 'close' })"></div>
             <!-- END Page Overlay -->
 
             <!-- Side Overlay -->
             <BaseSideOverlay v-if="store.layout.sideOverlay" :cart="$page.props.cart">
-            <template #header>
-                <slot name="side-overlay-header"></slot>
-            </template>
+                <template #header>
+                    <slot name="side-overlay-header"></slot>
+                </template>
 
-            <template #content>
-                <slot name="side-overlay-content"></slot>
-            </template>
+                <template #content>
+                    <slot name="side-overlay-content"></slot>
+                </template>
 
-            <slot name="side-overlay"></slot>
+                <slot name="side-overlay"></slot>
             </BaseSideOverlay>
             <!-- END Side Overlay -->
 

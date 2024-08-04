@@ -113,11 +113,11 @@ watch(
               </form> -->
               <!-- END Search Form -->
 
-              <span type="button" class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light">
+              <span class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light">
                 {{ currentDateTime }}
               </span>
 
-              <span type="button" class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light ms-2">
+              <span class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light ms-2">
                 {{ currentTime }}
               </span>
             </slot>
@@ -166,7 +166,7 @@ watch(
             <div class="dropdown d-inline-block ms-2">
               <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center"
                 id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="rounded-circle" src="assets/media/avatars/avatar10.jpg" alt="Header Avatar"
+                <img class="rounded-circle" src="@/assets/media/avatars/avatar10.jpg" alt="Header Avatar"
                   style="width: 21px;">
                 <span class="d-none d-sm-inline-block ms-2">{{ $page.props.auth.user.name }}</span>
                 <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block opacity-50 ms-1 mt-1"></i>
@@ -199,15 +199,12 @@ watch(
             <!-- END User Dropdown -->
 
             <!-- Toggle Side Overlay -->
-            <button
-                type="button"
-                class="btn btn-sm btn-alt-secondary ms-2 space-x-1"
-                @click="store.sideOverlay({ mode: 'toggle' })"
-              >
-                <i class="fa fa-fw fa-cart-plus"></i>
-                <span v-if="cart && cart.items.length" class="text-primary">•</span>
-              </button>
-              <!-- END Toggle Side Overlay -->
+            <button type="button" class="btn btn-sm btn-alt-secondary ms-2 space-x-1"
+              @click="store.sideOverlay({ mode: 'toggle' })">
+              <i class="fa fa-fw fa-cart-plus"></i>
+              <span v-if="cart && cart.items.length" class="text-primary">•</span>
+            </button>
+            <!-- END Toggle Side Overlay -->
           </div>
           <!-- END Right Section -->
         </slot>

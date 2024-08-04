@@ -18,11 +18,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $paymentMethods = PaymentMethod::all();
         $cart = Cart::where('user_id', auth()->id())->with(['items.product', 'user', 'items.product.categoryservices'])->first();
         return Inertia::render('Dashboard/Cart/Index', [
             'cart' => $cart,
-            'paymentMethods' => $paymentMethods
         ]);
     }
 

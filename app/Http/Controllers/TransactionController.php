@@ -9,24 +9,52 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query = Transaction::with(['items.service', 'user']);
+        $transactions = Transaction::query()->with(['items.service', 'user']);
 
-        if (Auth::user()->role === 4) {
-            $query->where('user_id', auth()->id());
+        if ($request->has('search')) {
+            $search = $request->search;
+            $transactions->where(function ($query) use ($search) {
+                $query->where('invoice_code', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('user', function ($query) use ($search) {
+                        $query->where('name', 'LIKE', '%' . $search . '%');
+                    });
+            });
         }
 
-        $transactions = $query->get();
+        if ($request->has('status') && $request->status != '') {
+            $transactions->where('transactions.status', $request->status);
+        }
+
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            if ($request->sort_by === 'user.name') {
+                $transactions->join('users', 'transactions.user_id', '=', 'users.id')
+                            ->orderBy('users.name', $request->sort_order)
+                            ->select('transactions.*');
+            } else {
+                $transactions->orderBy('transactions.' . $request->sort_by, $request->sort_order);
+            }
+        } else {
+            // Default sorting if no sort_by and sort_order are provided
+            $transactions->orderBy('transactions.created_at', 'desc');
+        }
+
+        if (Auth::user()->role === 4) {
+            $transactions->where('user_id', auth()->id());
+        }
 
         return Inertia::render('Dashboard/Transactions/Index', [
-            'transactions' => $transactions,
+            'transactions' => $transactions->paginate(10),
+            'filters' => $request->all(['search', 'status', 'sort_by', 'sort_order'])
         ]);
     }
 
@@ -44,9 +72,6 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'payment_method' => 'required|string',
-        ]);
 
         $cart = Cart::where('user_id', auth()->id())->with('items.product')->first();
 
@@ -65,7 +90,6 @@ class TransactionController extends Controller
             'invoice_code' => $invoiceCode,
             'total' => $total,
             'status' => 'pending',
-            'payment_method' => $request->payment_method,
         ]);
 
         foreach ($cart->items as $item) {
@@ -77,10 +101,41 @@ class TransactionController extends Controller
             ]);
         }
 
+         // Set Midtrans configuration
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
+
+        // Create transaction parameters
+        $params = [
+            'transaction_details' => [
+                'order_id' => $invoiceCode,
+                'gross_amount' => $total,
+            ],
+            'customer_details' => [
+                'first_name' => auth()->user()->name,
+                'email' => auth()->user()->email,
+            ],
+            'item_details' => $cart->items->map(function ($item) {
+                return [
+                    'id' => $item->product->id,
+                    'price' => $item->product->price,
+                    'quantity' => $item->quantity,
+                    'name' => $item->product->name,
+                ];
+            })->toArray(),
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        $transaction->midtrans_token = $snapToken;
+        $transaction->save();
+
         // Clear cart after transaction
         $cart->items()->delete();
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index')->with('success', 'Lanjut Pembayaran');
     }
 
     /**
@@ -88,7 +143,25 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        $transaction = Transaction::with(['items.service', 'user'])->findOrFail($transaction->id);
+
+        $midtransClientKey = config('midtrans.client_key');
+
+        return Inertia::render('Dashboard/Transactions/Show', [
+            'transactions' => $transaction,
+            'midtransClientKey' => $midtransClientKey,
+        ]);
+    }
+
+    public function completed(Transaction $transaction)
+    {
+        $transaction->status = 'completed';
+        $transaction->save();
+
+        // Kirim notifikasi ke pengguna
+        // $transaction->user->notify(new TransactionStatusUpdated($transaction));
+
+        return redirect()->route('transactions.index');
     }
 
     /**
@@ -102,9 +175,15 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Transaction $transaction)
     {
-        //
+        $transaction->status = 'completed';
+        $transaction->save();
+
+        // Kirim notifikasi ke pengguna
+        // $transaction->user->notify(new TransactionStatusUpdated($transaction));
+
+        return redirect()->route('transactions.index')->with('success', 'Pembayaran Berhasil');
     }
 
     /**

@@ -19,9 +19,9 @@ defineProps({
 const store = useTemplateStore();
 
 // Init SimpleBar (custom scrolling)
-// onMounted(() => {
-//   new SimpleBar(document.getElementById("simplebar-sidebar"));
-// });
+onMounted(() => {
+  new SimpleBar(document.getElementById("simplebar-sidebar"));
+});
 
 
 // Main menu toggling and mobile functionality
