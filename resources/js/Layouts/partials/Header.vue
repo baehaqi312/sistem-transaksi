@@ -113,7 +113,7 @@ watch(
               </form> -->
               <!-- END Search Form -->
 
-              <span class="fs-xs fw-bold d-inline-block py-2 px-3 rounded-pill bg-body-light">
+              <span class="fs-xs fw-bold d-none d-sm-inline-block py-2 px-3 rounded-pill bg-body-light">
                 {{ currentDateTime }}
               </span>
 
@@ -174,7 +174,8 @@ watch(
               <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0"
                 aria-labelledby="page-header-user-dropdown">
                 <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
+                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="@/assets/media/avatars/avatar10.jpg"
+                    alt="">
                   <p class="mt-2 mb-0 fw-medium">{{ $page.props.auth.user.name }}</p>
                   <p class="mb-0 text-muted fs-sm fw-medium">Web Developer</p>
                 </div>

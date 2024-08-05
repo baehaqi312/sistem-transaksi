@@ -135,7 +135,7 @@ class TransactionController extends Controller
         // Clear cart after transaction
         $cart->items()->delete();
 
-        return redirect()->route('transactions.index')->with('success', 'Lanjut Pembayaran');
+        return redirect()->route('transactions.show', $transaction->id)->with('success', 'Lanjut Pembayaran');
     }
 
     /**
@@ -143,7 +143,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $transaction = Transaction::with(['items.service', 'user'])->findOrFail($transaction->id);
+        $transaction = Transaction::with(['items.service.categoryservices', 'user'])->findOrFail($transaction->id);
 
         $midtransClientKey = config('midtrans.client_key');
 
