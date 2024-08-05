@@ -124,11 +124,12 @@ const subtotal = computed(() => {
             </table>
         </template>
         <template #footer>
-            <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+            <button @click="closeModal" class="btn btn-sm btn-secondary"> Cancel</button>
 
-            <DangerButton class="ms-2">
-                Delete Account
-            </DangerButton>
+            <a type="button" class="btn btn-sm btn-primary ms-2" :href="`/transactions/${transactions?.id}/pdf`"
+                target="_blank">
+                Print Invoice
+            </a>
         </template>
     </Modal>
 </template>

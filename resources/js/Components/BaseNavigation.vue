@@ -80,19 +80,19 @@ function linkClicked(e, submenu) {
           <!-- <i class="nav-main-link-icon si si-energy"></i> -->
           <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
           <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
-          <span class="nav-main-link-name">Layanan</span>
+          <span class="nav-main-link-name">Master Layanan</span>
         </a>
         <ul class="nav-main-submenu">
-          <li class="nav-main-item">
-            <NavLink :href="route('service.index')" :active="route().current('service.index')"
-              @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Daftar Service</span>
-            </NavLink>
-          </li>
           <li class="nav-main-item">
             <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')"
               @click="linkClicked($event, false)">
               <span class="nav-main-link-name">Daftar Kategori Service</span>
+            </NavLink>
+          </li>
+          <li class="nav-main-item">
+            <NavLink :href="route('service.index')" :active="route().current('service.index')"
+              @click="linkClicked($event, false)">
+              <span class="nav-main-link-name">Daftar Service</span>
             </NavLink>
           </li>
         </ul>
@@ -104,24 +104,19 @@ function linkClicked(e, submenu) {
         <!-- <i class="nav-main-link-icon si si-energy"></i> -->
         <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
         <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
-        <span class="nav-main-link-name">Service</span>
+        <span class="nav-main-link-name">Layanan</span>
       </a>
       <ul class="nav-main-submenu">
         <li class="nav-main-item">
           <NavLink :href="route('software_development.index')" :active="route().current('software_development.index')"
             @click="linkClicked($event, false)">
-            <span class="nav-main-link-name">Software Development</span>
+            <span class="nav-main-link-name">Pembuatan Website</span>
           </NavLink>
         </li>
         <li class="nav-main-item">
           <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')"
             @click="linkClicked($event, false)">
-            <span class="nav-main-link-name">Digital Marketing</span>
-          </NavLink>
-        </li>
-        <li class="nav-main-item">
-          <NavLink href="#">
-            <span class="nav-main-link-name">Cloud Computing</span>
+            <span class="nav-main-link-name">Kelola Sosial Media</span>
           </NavLink>
         </li>
       </ul>

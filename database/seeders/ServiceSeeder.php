@@ -17,16 +17,16 @@ class ServiceSeeder extends Seeder
     {
         DB::table('category_services')->insert([
             'id' => 1,
-            'name' => 'Software Development',
-            'images' => 'images/0ba819fa-a8db-4585-9b24-cda39d22de14.jpg',
+            'name' => 'Pembuatan Website',
+            'images' => 'pembuatan_website.jpg',
             'kode' => 1,
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('category_services')->insert([
             'id' => 2,
-            'name' => 'Digital Marketing',
-            'images' => 'images/0ba819fa-a8db-4585-9b24-cda39d22de14.jpg',
+            'name' => 'Kelola Sosial Media',
+            'images' => 'kelola_sosmed.jpg',
             'kode' => 2,
             'created_at' => Carbon::now(),
         ]);

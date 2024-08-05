@@ -38,7 +38,7 @@ const addToCart = (serviceId) => {
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                     <div class="flex-grow-1">
                         <h1 class="h3 fw-bold mb-1">
-                            Software Development
+                            Pembuatan Website
                         </h1>
                     </div>
                     <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -47,7 +47,7 @@ const addToCart = (serviceId) => {
                                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
-                                Software Development
+                                Pembuatan Website
                             </li>
                         </ol>
                     </nav>
@@ -56,19 +56,15 @@ const addToCart = (serviceId) => {
         </div>
         <!-- END Hero -->
 
-        <div class="content pt-2"  v-for="(item, index) in software_development" :key="index">
+        <div class="content pt-2" v-for="(item, index) in software_development" :key="index">
             <!-- Modern Design -->
             <!-- <h2 class="content-heading">Modern Design <small>Grid Based</small></h2> -->
             <template v-if="item.service && item.service.length > 0">
                 <div class="row">
-                    <div class="col-md-6 animated fadeIn col-xl-3" v-for="(service, index) in item.service" :key="index">
+                    <div class="col-md-6 animated fadeIn col-xl-3" v-for="(service, index) in item.service"
+                        :key="index">
                         <!-- Business Plan -->
-                        <BaseBlock tag="a" href="javascript:void(0)"
-                        class="text-center"
-                        link-shadow
-                        themed
-                        fx-shadow
-                        >
+                        <BaseBlock tag="a" href="javascript:void(0)" class="text-center" link-shadow themed fx-shadow>
                             <template #content>
                                 <div class="block-header">
                                     <h3 class="block-title">{{ service.name }}</h3>
@@ -76,24 +72,17 @@ const addToCart = (serviceId) => {
                                 <div class="block-content bg-body-light">
                                     <div class="py-2">
                                         <p class="h3 fw-bold mb-2">{{ formatRupiah(service.price) }} ;</p>
-                                        <p class="h6 text-muted">{{ service.description }}</p>
+                                        <!-- <p class="h6 text-muted">{{ service.description }}</p> -->
                                     </div>
                                 </div>
-                                <div class="block-content">
-                                    <div class="fs-sm py-2">
-                                        <p><strong>50</strong> Projects</p>
-                                        <p><strong>100GB</strong> Storage</p>
-                                        <p><strong>1000</strong> Clients</p>
-                                        <p><strong>FULL</strong> Support</p>
-                                    </div>
-                                </div>
-                                <div class="block-content block-content-full bg-body-light">
+                                <div class="block-content block-content-full">
                                     <form @submit.prevent="addToCart(service.id)">
                                         <input type="hidden" name="service_id" :value="service.id">
                                         <input type="hidden" v-model="quantity[service.id]" min="1"
                                             placeholder="Quantity">
                                         <!-- <button type="submit">Add to Cart</button> -->
-                                        <button type="submit" class="btn btn-primary px-4"><i class="fa fa-fw fa-cart-plus"></i> Order</button>
+                                        <button type="submit" class="btn btn-primary px-4"><i
+                                                class="fa fa-fw fa-cart-plus"></i> Order</button>
                                     </form>
                                 </div>
                             </template>

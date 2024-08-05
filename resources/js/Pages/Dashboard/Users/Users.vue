@@ -46,12 +46,11 @@ watch(
 
     <Head title="Pengguna" />
     <AuthenticatedLayout>
-        <CretaeUsers title="Create Resume Pasien" :show="data.createModal"
-                @close="data.createModal = false" />
-        <UpdateUsers title="Update Resume Pasien" :show="data.updateModal"
-        @close="data.updateModal = false" :user="data.user"/>
-        <DeleteUsers title="Update Resume Pasien" :show="data.deleteModal"
-        @close="data.deleteModal = false" :user="data.user"/>
+        <CretaeUsers title="Create Resume Pasien" :show="data.createModal" @close="data.createModal = false" />
+        <UpdateUsers title="Update Resume Pasien" :show="data.updateModal" @close="data.updateModal = false"
+            :user="data.user" />
+        <DeleteUsers title="Update Resume Pasien" :show="data.deleteModal" @close="data.deleteModal = false"
+            :user="data.user" />
         <!-- Hero -->
         <div class="">
             <div class="content content-full">
@@ -82,9 +81,9 @@ watch(
                 <template #options>
                     <div class="space-x-1">
                         <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => {
-                                orderSearch = !orderSearch;
-                            }
-                                ">
+            orderSearch = !orderSearch;
+        }
+            ">
                             <i class="fa fa-search"></i>
                         </button>
                         <div class="dropdown d-inline-block">
@@ -123,26 +122,29 @@ watch(
                                                         alt="avatar">
                                                 </div>
                                                 <div class="d-inline-flex flex-column ms-0 ms-sm-3 w-auto">
-                                                    <a class="fw-semibold mb-1" href="javascript:void(0)">{{ user.name }}</a>
+                                                    <a class="fw-semibold mb-1"
+                                                        href="javascript:void(0)">{{ user.name }}</a>
                                                     <div v-if="user.role === 1"
                                                         class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
                                                         Super Admin
                                                     </div>
-                                                    <div v-if="user.role === 2" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                    <div v-if="user.role === 2"
+                                                        class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
                                                         Direktur Keuangan
                                                     </div>
-                                                    <div v-if="user.role === 3" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
-                                                        Admin Keuangan
+                                                    <div v-if="user.role === 3"
+                                                        class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                        Marketing
                                                     </div>
-                                                    <div v-if="user.role === 4" class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
+                                                    <div v-if="user.role === 4"
+                                                        class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
                                                         Pelanggan
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <span
-                                                class="fw-semibold d-inline-block text-success">
+                                            <span class="fw-semibold d-inline-block text-success">
                                                 <i class="fa-solid fa-user-check"></i>
                                             </span>
                                         </td>
@@ -155,18 +157,21 @@ watch(
                                         <td class="text-center">
                                             <div class="dropdown d-inline-block">
                                                 <button type="button" class="btn btn-sm btn-alt-secondary"
-                                                    id="dropdown-recent-orders-filters" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                    id="dropdown-recent-orders-filters" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
                                                     <strong><i class="fa-solid fa-ellipsis-vertical"></i></strong>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
                                                     aria-labelledby="dropdown-recent-orders-filters">
-                                                    <a type="button" class="dropdown-item fw-medium d-flex align-items-center"
+                                                    <a type="button"
+                                                        class="dropdown-item fw-medium d-flex align-items-center"
                                                         @click="(data.updateModal = true), data.user = user">
                                                         <i class="fa-solid fa-envelope me-3"></i>
                                                         Ubah E-Mail Pengguna
                                                     </a>
-                                                    <a type="button" class="dropdown-item fw-medium d-flex align-items-center" @click="(data.deleteModal = true), data.user = user">
+                                                    <a type="button"
+                                                        class="dropdown-item fw-medium d-flex align-items-center"
+                                                        @click="(data.deleteModal = true), data.user = user">
                                                         <i class="fa-solid fa-user-lock me-3"></i>
                                                         Delete Pengguna
                                                     </a>

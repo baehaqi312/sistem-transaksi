@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
+use PDF;
 
 class TransactionController extends Controller
 {
@@ -158,17 +159,6 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function completed(Transaction $transaction)
-    {
-        $transaction->status = 'completed';
-        $transaction->save();
-
-        // Kirim notifikasi ke pengguna
-        // $transaction->user->notify(new TransactionStatusUpdated($transaction));
-
-        return redirect()->route('transactions.index');
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -197,5 +187,19 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+
+    public function generatePDF(Transaction $transaction)
+    {
+        $transaction = Transaction::with(['items.service.categoryservices', 'user'])->findOrFail($transaction->id);
+
+        $data = [
+            'date' => date('m/d/Y'),
+            'transactions' => $transaction,
+        ];
+
+        $pdf = Pdf::loadView('pdf.CetakInvoice', $data);
+        
+        return $pdf->stream('document.pdf');
     }
 }

@@ -221,6 +221,10 @@ const data = reactive({
                             @click="(data.openModal = true), data.transactions = transaction">
                             Detail Transaksi
                           </a>
+                          <a type="button" :href="`/transactions/${transaction.id}/pdf`" target="_blank"
+                            class="dropdown-item fw-medium d-flex align-items-center">
+                          Print Invoice
+                          </a>
                         </div>
                       </div>
                     </td>

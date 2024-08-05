@@ -27,5 +27,31 @@ class UserSeeder extends Seeder
             'status' => 1, // active
             'created_at' => Carbon::now(),
         ]);
+
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Admin Keuangan',
+            'email' => 'adminkeuangan@admin.com',
+            'phone' => '+6283818062960',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('12345678'),
+            'role' => 2, // Admin Sistem
+            'avatar' => '',
+            'status' => 1, // active
+            'created_at' => Carbon::now(),
+        ]);
+
+        DB::table('users')->insert([
+            'id' => 3,
+            'name' => 'Marketing',
+            'email' => 'marketing@admin.com',
+            'phone' => '+6283818062960',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('12345678'),
+            'role' => 3, // Admin Sistem
+            'avatar' => '',
+            'status' => 1, // active
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

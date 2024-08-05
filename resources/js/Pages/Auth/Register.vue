@@ -60,8 +60,8 @@ store.setColorTheme({
                     <div class="py-2">
                         <div class="mb-3">
                             <TextInput id="name" type="text" class="form-control form-control-alt form-control-lg"
-                                name="login-username" placeholder="Username" :class="{ 'is-invalid': form.errors.name }"
-                                v-model="form.name" />
+                                name="login-username" placeholder="Nama Lengkap"
+                                :class="{ 'is-invalid': form.errors.name }" v-model="form.name" />
                             <InputError class="mt-2" :message="form.errors.name" />
                         </div>
                         <div class="mb-3">
@@ -72,8 +72,8 @@ store.setColorTheme({
                         </div>
                         <div class="mb-3">
                             <TextInput id="phone" type="text" class="form-control form-control-alt form-control-lg"
-                                name="login-username" placeholder="No Telephone" :class="{ 'is-invalid': form.errors.phone }"
-                                v-model="form.phone" />
+                                name="login-username" placeholder="No Telephone"
+                                :class="{ 'is-invalid': form.errors.phone }" v-model="form.phone" />
                             <InputError class="mt-2" :message="form.errors.phone" />
                         </div>
                         <div class="mb-3">

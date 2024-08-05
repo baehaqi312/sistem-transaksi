@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+}
+
+table,
+td,
+th {
+  border: 1px solid;
+  padding: 5px 10px 5px 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.border-none {
+  border: none;
+}
+
+.logo {
+  width: 130px;
+}
+
+.judul {
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.h5 {
+  font-weight: bold;
+  font-size: medium;
+  color: #f4762e;
+}
+
+.box {
+  float: left;
+  width: 70px;
+  font-size: x-small;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.box-2 {
+  float: left;
+  width: 90px;
+  font-size: x-small;
+}
+
+.profile {
+  width: 280px;
+}
+
+.font-x-small {
+  font-size: x-small;
+}
+
+.text-area {
+  padding-bottom: 20px;
+}
+
+.text-area-max {
+  padding-bottom: 40px;
+}
+
+.gambar {
+  width: 685px;
+  height: 150px;
+}
+
+.text-area-footer {
+  padding: 20px;
+}
