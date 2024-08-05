@@ -1,10 +1,11 @@
 <script setup>
+import DetailTransactions from "./Detail.vue";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseBlock from '@/Components/BaseBlock.vue';
 import Pagination from '@/Components/Pagination.vue';
 import Search from '@/Components/Search.vue';
 import { Head, usePage, router, Link } from '@inertiajs/vue3';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, computed } from 'vue';
 import { cloneDeep, debounce, pickBy } from 'lodash';
 import moment from 'moment';
 
@@ -12,6 +13,8 @@ import moment from 'moment';
 const props = defineProps({
   transactions: Object,
   filters: Object,
+  totalIncome: String,
+  totalSub: String
 });
 
 const filters = reactive({
@@ -41,8 +44,6 @@ watch(
 // Helper variables
 const orderSearch = ref(false);
 
-console.info(props.transactions)
-
 const formatRupiah = (number) => {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -67,19 +68,26 @@ function sortIcon(field) {
   if (filters.sort_by !== field) return 'fa fa-sort';
   return filters.sort_order === 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down';
 }
+
+const data = reactive({
+  transactions: null,
+  openModal: false,
+})
 </script>
 
 <template>
 
   <Head title="Transaksi" />
   <AuthenticatedLayout>
+    <DetailTransactions title="Detail Transaksi" :show="data.openModal" @close="data.openModal = false"
+      :transactions="data.transactions" />
     <!-- Hero -->
     <div class="">
       <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
           <div class="flex-grow-1">
             <h1 class="h3 fw-bold mb-1">
-              Daftar Layanan
+              Daftar Transaksi
             </h1>
           </div>
           <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -88,7 +96,7 @@ function sortIcon(field) {
                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
               </li>
               <li class="breadcrumb-item" aria-current="page">
-                Daftar Layanan
+                Daftar Transaksi
               </li>
             </ol>
           </nav>
@@ -99,13 +107,13 @@ function sortIcon(field) {
 
     <!-- Recent Orders -->
     <div class="content">
-      <BaseBlock title="Recent Orders">
+      <BaseBlock title="Transaksi">
         <template #options>
           <div class="space-x-1">
             <button type="button" class="btn btn-sm btn-alt-secondary" @click="() => {
-                  orderSearch = !orderSearch;
-                }
-                  ">
+      orderSearch = !orderSearch;
+    }
+      ">
               <i class="fa fa-search"></i>
             </button>
             <div class="dropdown d-inline-block">
@@ -167,7 +175,8 @@ function sortIcon(field) {
                 <tbody class="fs-sm">
                   <tr v-for="(transaction, index) in transactions.data  " :key="index">
                     <td>
-                      <a class="fw-semibold" href="javascript:void(0)">
+                      <a type="button" class="fw-semibold"
+                        @click="(data.openModal = true), data.transactions = transaction">
                         {{ transaction.invoice_code }}
                       </a>
                     </td>
@@ -194,11 +203,41 @@ function sortIcon(field) {
                     <td class="d-none d-sm-table-cell text-end">
                       <strong>{{ formatRupiah(transaction.total) }}</strong>
                     </td>
-                    <td>
-                      <Link :href="(route('transactions.show', transaction))">
-                      <button class="btn btn-sm btn-primary">Bayar</button>
-                      </Link>
+                    <td class="text-end">
+                      <div class="dropdown d-inline-block ms-2">
+                        <button type="button" class="btn btn-sm btn-alt-secondary" id="dropdown-recent-orders-filters"
+                          data-bs-toggle="dropdown">
+                          <strong><i class="fa-solid fa-ellipsis-vertical"></i></strong>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
+                          aria-labelledby="dropdown-recent-orders-filters">
+                          <template v-if="$page.props.auth.user.role == 4">
+                            <Link type="button" class="dropdown-item fw-medium d-flex align-items-center"
+                              v-if="transaction.status === 'pending'" :href="(route('transactions.show', transaction))">
+                            Bayar Sekarang
+                            </Link>
+                          </template>
+                          <a type="button" class="dropdown-item fw-medium d-flex align-items-center"
+                            @click="(data.openModal = true), data.transactions = transaction">
+                            Detail Transaksi
+                          </a>
+                        </div>
+                      </div>
                     </td>
+                  </tr>
+                  <tr v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
+                    <td colspan="5" class="text-end"><strong>Sub Total</strong></td>
+                    <td class="text-end">
+                      <strong>{{ formatRupiah(props.totalSub) }}</strong>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
+                    <td colspan="5" class="text-end"><strong>Uang Masuk</strong></td>
+                    <td class="text-end">
+                      <strong>{{ formatRupiah(props.totalIncome) }}</strong>
+                    </td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>

@@ -57,7 +57,7 @@ function linkClicked(e, submenu) {
         <span class="nav-main-link-name">Dasbor</span>
       </NavLink>
     </li>
-    <template v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
+    <template v-if="$page.props.auth.user.role == 1">
       <li class="nav-main-heading">Manajemen Sistem</li>
       <li class="nav-main-item">
         <NavLink :href="route('users.index')" :active="route().current('users.index')"
@@ -99,52 +99,42 @@ function linkClicked(e, submenu) {
       </li>
     </template>
     <!-- <template v-if="$page.props.auth.user.role == 4 "> -->
-      <li class="nav-main-item">
-        <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
-          <!-- <i class="nav-main-link-icon si si-energy"></i> -->
-          <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
-          <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
-          <span class="nav-main-link-name">Service</span>
-        </a>
-        <ul class="nav-main-submenu">
-          <li class="nav-main-item">
-            <NavLink :href="route('software_development.index')" :active="route().current('software_development.index')" @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Software Development</span>
-            </NavLink>
-          </li>
-          <li class="nav-main-item">
-            <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')" @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Digital Marketing</span>
-            </NavLink>
-          </li>
-          <li class="nav-main-item">
-            <NavLink href="#">
-              <span class="nav-main-link-name">Cloud Computing</span>
-            </NavLink>
-          </li>
-        </ul>
-      </li>
+    <li class="nav-main-item">
+      <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
+        <!-- <i class="nav-main-link-icon si si-energy"></i> -->
+        <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
+        <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
+        <span class="nav-main-link-name">Service</span>
+      </a>
+      <ul class="nav-main-submenu">
+        <li class="nav-main-item">
+          <NavLink :href="route('software_development.index')" :active="route().current('software_development.index')"
+            @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Software Development</span>
+          </NavLink>
+        </li>
+        <li class="nav-main-item">
+          <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')"
+            @click="linkClicked($event, false)">
+            <span class="nav-main-link-name">Digital Marketing</span>
+          </NavLink>
+        </li>
+        <li class="nav-main-item">
+          <NavLink href="#">
+            <span class="nav-main-link-name">Cloud Computing</span>
+          </NavLink>
+        </li>
+      </ul>
+    </li>
     <!-- </template> -->
 
     <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">
-      <NavLink :href="route('transactions.index')" :active="route().current('transactions.index')" @click="linkClicked($event, false)">
+      <NavLink :href="route('transactions.index')" :active="route().current('transactions.index')"
+        @click="linkClicked($event, false)">
         <i class="nav-main-link-icon far fa-file"></i>
-        <span class="nav-main-link-name">Transaksi</span>
-      </NavLink>
-    </li>
-
-    <li class="nav-main-heading">Data Keuangan</li>
-    <li class="nav-main-item">
-      <NavLink href="#">
-        <i class="nav-main-link-icon far fa-file"></i>
-        <span class="nav-main-link-name">Laporan</span>
-      </NavLink>
-    </li>
-    <li class="nav-main-item">
-      <NavLink href="#">
-        <i class="nav-main-link-icon far fa-money-bill-1"></i>
-        <span class="nav-main-link-name">Uang Masuk</span>
+        <span v-if="$page.props.auth.user.role == 4" class="nav-main-link-name">Transaksi</span>
+        <span v-else class="nav-main-link-name">Laporan Transaksi</span>
       </NavLink>
     </li>
   </ul>

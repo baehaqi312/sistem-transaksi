@@ -19,7 +19,7 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $transactions = Transaction::query()->with(['items.service', 'user']);
+        $transactions = Transaction::query()->with(['items.service.categoryservices', 'user']);
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -52,9 +52,14 @@ class TransactionController extends Controller
             $transactions->where('user_id', auth()->id());
         }
 
+        $totalSub = Transaction::sum('total');
+        $totalIncome = Transaction::where('status', 'completed')->sum('total');
+
         return Inertia::render('Dashboard/Transactions/Index', [
-            'transactions' => $transactions->paginate(10),
-            'filters' => $request->all(['search', 'status', 'sort_by', 'sort_order'])
+            'transactions' => $transactions->paginate(5),
+            'filters' => $request->all(['search', 'status', 'sort_by', 'sort_order']),
+            'totalIncome' => $totalIncome,
+            'totalSub' => $totalSub
         ]);
     }
 
@@ -183,7 +188,7 @@ class TransactionController extends Controller
         // Kirim notifikasi ke pengguna
         // $transaction->user->notify(new TransactionStatusUpdated($transaction));
 
-        return redirect()->route('transactions.index')->with('success', 'Pembayaran Berhasil');
+        return redirect()->route('transactions.index')->with('success', 'Terimakasih Sudah Melakukan Pembayaran');
     }
 
     /**

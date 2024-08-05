@@ -4,7 +4,9 @@ import BasePageHeading from '@/Components/BasePageHeading.vue';
 import BaseBlock from '@/Components/BaseBlock.vue';
 import { useTemplateStore } from "@/stores/template";
 import { watch, reactive, computed, onMounted, onUnmounted, ref } from 'vue';
-import { router, useForm, Head } from '@inertiajs/vue3';
+import { router, useForm, Head, Link } from '@inertiajs/vue3';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+
 
 // Main store
 const store = useTemplateStore();
@@ -71,25 +73,25 @@ loadSnapScript(props.midtransClientKey);
 </script>
 
 <template>
-    <AuthenticatedLayout>
+    <GuestLayout>
 
         <Head title="Pembayaran" />
         <!-- Page Content -->
         <div class="content content-full overflow-hidden">
             <!-- Header -->
             <div class="mb-4 text-center">
-                <a href="index.php">
+                <a href="#">
                     <i class="fa fa-2x fa-circle-notch text-primary"></i>
                 </a>
-                <h1 class="h3 fw-bold mt-3 mb-2"># {{ transactions.invoice_code }}</h1>
+                <h1 class="h3 fw-bold mt-3 mb-2">#{{ transactions.invoice_code }}</h1>
             </div>
             <!-- END Header -->
 
             <!-- Checkout -->
-            <div class="row justify-content-center">
+            <div class="">
 
                 <!-- Order Summary -->
-                <div class="col-sm-6 order-xl-last">
+                <div class="">
                     <div class="block block-rounded">
                         <div class="block-content block-content-full">
                             <table class="table table-vcenter">
@@ -123,20 +125,25 @@ loadSnapScript(props.midtransClientKey);
                         </div>
                     </div>
                     <button v-if="transactions.status === 'pending'" id="pay-button"
-                        class="btn btn-primary w-100 py-3 push">
+                        class="btn btn-primary w-100 py-2 mb-3">
                         Bayar Sekarang
                     </button>
 
-                    <button v-if="transactions.status === 'completed'" id="pay-button"
-                        class="btn btn-success w-100 py-3 push">
+                    <button v-if="transactions.status === 'completed'" class="btn btn-success w-100 py-3 mb-3">
                         <i class="fa fa-check opacity-50 me-1"></i>
                         Sudah Dibayar
                     </button>
+
+                    <Link :href="route('transactions.index')">
+                    <button class="btn btn-secondary w-100 py-2">
+                        Kembali Ke Dashboard
+                    </button>
+                    </Link>
                 </div>
                 <!-- END Order Summary -->
             </div>
             <!-- END Checkout -->
         </div>
         <!-- END Page Content -->
-    </AuthenticatedLayout>
+    </GuestLayout>
 </template>
