@@ -1,6 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+
+const props = defineProps({
+    getQuote: String
+});
 </script>
 
 <template>
@@ -20,6 +24,7 @@ import { Head } from '@inertiajs/vue3';
                         Welcome <a class="fw-semibold"
                             href="be_pages_generic_profile.html">{{ $page.props.auth.user.name }}</a>
                     </h2>
+                    <span>{{ getQuote }}</span>
                 </div>
                 <div class="mt-3 mt-md-0 ms-md-3 space-x-1">
                     <a class="btn btn-sm btn-alt-secondary space-x-1" href="be_pages_generic_profile_edit.html">
