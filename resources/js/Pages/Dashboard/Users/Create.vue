@@ -15,17 +15,17 @@ const props = defineProps({
 })
 
 const form = useForm({
-    name:'',
-    email:'',
-    phone:'',
-    password:'',
-    password_confirmation:'',
-    role:''
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    password_confirmation: '',
+    role: ''
 })
 
 const createNewUsers = () => {
     form.post(route('users.store'), {
-        preserveScroll:true,
+        preserveScroll: true,
         onSuccess: () => {
             closeModal()
             form.reset()
@@ -74,39 +74,43 @@ onUnmounted(() => {
         <template #body>
             <div class="mb-3">
                 <InputLabel for="name" value="Nama" />
-                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Nama" />
+                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                    placeholder="Nama" />
                 <InputError :message="form.errors.name" class="mt-1" />
             </div>
 
             <div class="mb-3">
                 <InputLabel for="email" value="Email" />
-                <TextInput id="email" ref="email" v-model="form.email" type="email" class="form-control" placeholder="Email" />
+                <TextInput id="email" ref="email" v-model="form.email" type="email" class="form-control"
+                    placeholder="Email" />
                 <InputError :message="form.errors.email" class="mt-1" />
             </div>
 
             <div class="mb-3">
                 <InputLabel for="phone" value="phone" />
-                <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control" placeholder="No Telephone" />
+                <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control"
+                    placeholder="No Telephone" />
                 <InputError :message="form.errors.phone" class="mt-1" />
             </div>
 
             <div class="mb-3">
                 <InputLabel for="password" value="Password" />
-                <TextInput id="password" ref="password" v-model="form.password" type="password" class="form-control" placeholder="Password" />
+                <TextInput id="password" ref="password" v-model="form.password" type="password" class="form-control"
+                    placeholder="Password" />
                 <InputError :message="form.errors.password" class="mt-1" />
             </div>
 
             <div class="mb-3">
                 <InputLabel for="password_confirmation" value="Password Confirmation" />
-                <TextInput id="password_confirmation" ref="password_confirmation" v-model="form.password_confirmation" type="password" class="form-control" placeholder="Password Confirmation" />
+                <TextInput id="password_confirmation" ref="password_confirmation" v-model="form.password_confirmation"
+                    type="password" class="form-control" placeholder="Password Confirmation" />
                 <InputError :message="form.errors.password_confirmation" class="mt-1" />
             </div>
 
             <div class="mb-3">
                 <InputLabel for="role" value="Role Pengguna" />
                 <select class="form-select" v-model="form.role" id="role" placeholder="Password Confirmation">
-                    <option value="1">Super Admin</option>
-                    <option value="2">Direktur Keuangan</option>
+                    <option value="1">Direktur Keuangan</option>
                     <option value="3">Admin Keuangan</option>
                     <option value="4">Pelanggan</option>
                 </select>

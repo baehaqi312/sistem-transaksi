@@ -98,11 +98,8 @@ function linkClicked(e, submenu) {
         </ul>
       </li>
     </template>
-    <!-- <template v-if="$page.props.auth.user.role == 4 "> -->
     <li class="nav-main-item">
       <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
-        <!-- <i class="nav-main-link-icon si si-energy"></i> -->
-        <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
         <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
         <span class="nav-main-link-name">Layanan</span>
       </a>
@@ -121,7 +118,6 @@ function linkClicked(e, submenu) {
         </li>
       </ul>
     </li>
-    <!-- </template> -->
 
     <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">

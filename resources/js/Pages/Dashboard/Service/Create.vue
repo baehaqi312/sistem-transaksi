@@ -27,7 +27,7 @@ const form = useForm({
 
 const createNewCategoryService = () => {
     form.post(route('service.store'), {
-        preserveScroll:true,
+        preserveScroll: true,
         onSuccess: () => {
             closeModal()
             form.reset()
@@ -67,8 +67,8 @@ onUnmounted(() => {
 })
 
 const formatRupiah = (value) => {
-  if (!value) return 'Rp 0';
-  return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (!value) return 'Rp 0';
+    return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 </script>
 
@@ -85,15 +85,19 @@ const formatRupiah = (value) => {
         <template #body>
             <div class="mb-3">
                 <label class="form-label" for="category_id">Pegawai</label>
-                <VueSelect v-model="form.category_id" id="category_id" name="category_id" placeholder="Cai Pegawai"
-                    :options="category_service" label="name" :reduce="(category_service) => category_service.id">
-                </VueSelect>
                 <InputError :message="form.errors.category_id" />
+
+                <select class="form-select" v-model="form.category_id" id="category_id" name="category_id">
+                    <!-- <option selected>Open this select menu</option> -->
+                    <option value="1">Software Development</option>
+                    <option value="2">Digital Marketing</option>
+                </select>
             </div>
 
             <div class="mb-3">
                 <InputLabel for="name" value="name" />
-                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Name" />
+                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                    placeholder="Name" />
                 <InputError :message="form.errors.name" class="mt-1" />
             </div>
 
@@ -106,7 +110,8 @@ const formatRupiah = (value) => {
 
             <div class="mb-3">
                 <InputLabel for="price" value="price" />
-                <TextInput id="price" ref="price" v-model="form.price" type="number" class="form-control" placeholder="price" />
+                <TextInput id="price" ref="price" v-model="form.price" type="number" class="form-control"
+                    placeholder="price" />
                 <InputError :message="form.errors.price" class="mt-1" />
                 <span>Formatted Price: {{ formatRupiah(form.price) }}</span>
             </div>

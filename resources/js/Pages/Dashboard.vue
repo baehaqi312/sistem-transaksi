@@ -3,8 +3,21 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
-    getQuote: String
+    getQuote: String,
+    services: Number,
+    users: Number,
+    transactions: Object,
+    totalTransactions: Number,
+    category_services: Object,
+    transactionsAdmin: Number,
 });
+
+const formatRupiah = (number) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+    }).format(number)
+}
 </script>
 
 <template>
@@ -12,7 +25,6 @@ const props = defineProps({
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <!-- Hero -->
         <div class="content">
             <div
                 class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center py-2 text-center text-md-start">
@@ -20,41 +32,16 @@ const props = defineProps({
                     <h1 class="h3 fw-bold mb-2">
                         Dashboard
                     </h1>
-                    <h2 class="h6 fw-medium fw-medium text-muted mb-0">
-                        Welcome <a class="fw-semibold"
-                            href="be_pages_generic_profile.html">{{ $page.props.auth.user.name }}</a>
-                    </h2>
-                    <span>{{ getQuote }}</span>
-                </div>
-                <div class="mt-3 mt-md-0 ms-md-3 space-x-1">
-                    <a class="btn btn-sm btn-alt-secondary space-x-1" href="be_pages_generic_profile_edit.html">
-                        <i class="fa fa-cogs opacity-50"></i>
-                        <span>Settings</span>
-                    </a>
-                    <div class="dropdown d-inline-block">
-                        <button type="button" class="btn btn-sm btn-alt-secondary space-x-1"
-                            id="dropdown-analytics-overview" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa fa-fw fa-calendar-alt opacity-50"></i>
-                            <span>All time</span>
-                            <i class="fa fa-fw fa-angle-down"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end fs-sm"
-                            aria-labelledby="dropdown-analytics-overview">
-                            <a class="dropdown-item fw-medium" href="javascript:void(0)">Last 30 days</a>
-                            <a class="dropdown-item fw-medium" href="javascript:void(0)">Last month</a>
-                            <a class="dropdown-item fw-medium" href="javascript:void(0)">Last 3 months</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item fw-medium" href="javascript:void(0)">This year</a>
-                            <a class="dropdown-item fw-medium" href="javascript:void(0)">Last Year</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>All time</span>
-                                <i class="fa fa-check"></i>
-                            </a>
-                        </div>
-                    </div>
+                    <nav class="flex-shrink-0 mt-3 mt-sm-0" aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-alt">
+                            <!-- <li class="breadcrumb-item">
+                            <a class="link-fx" :href="route('dashboard')">Dashboard</a>
+                        </li> -->
+                            <li class="breadcrumb-item" aria-current="page">
+                                Dashboard
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -63,98 +50,124 @@ const props = defineProps({
         <!-- Page Content -->
         <div class="content">
             <!-- Overview -->
-            <div class="row items-push">
-                <div class="col-sm-6 col-xxl-3">
-                    <!-- Pending Orders -->
-                    <div class="block block-rounded d-flex flex-column h-100 mb-0">
-                        <div
-                            class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
-                            <dl class="mb-0">
-                                <dt class="fs-3 fw-bold">32</dt>
-                                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Pending Orders</dd>
-                            </dl>
-                            <div class="item item-rounded-lg bg-body-light">
-                                <i class="far fa-gem fs-3 text-primary"></i>
+            <div class="row">
+                <div class="col-sm-5 col-xxl-3">
+                    <div class="flex-grow">
+                        <div class="block block-rounded d-flex flex-column mb-3"
+                            v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 3">
+                            <div class="block-content block-content-full flex-grow d-flex align-items-center">
+                                <img class="img-avatar img-avatar50 border border-2 border-primary"
+                                    style="width: 90px; height: 90px;" src="https://picsum.photos/300/300"
+                                    alt="User Photo" />
+                                <dl class="ms-4 mb-0">
+                                    <dt class="fs-4 fw-bold">Selamat Datang, {{ $page.props.auth.user.name }}.</dt>
+                                    <dd class="fs-6 fw-medium text-muted mb-0">
+                                        {{ $page.props.auth.user.name }}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="bg-body-light rounded-bottom">
+                                <div
+                                    class="block-content block-content-full my-2 block-content-sm fs-sm fw-medium fst-italic">
+                                    <span>{{ getQuote }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-body-light rounded-bottom">
-                            <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>View all orders</span>
-                                <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
-                            </a>
+                        <div class="block block-rounded d-flex flex-column mb-3" v-if="$page.props.auth.user.role == 4">
+                            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active" v-for="items in category_services">
+                                        <img :src="`storage/${items.images}`" :alt="items.images" class="d-block w-100">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <!-- END Pending Orders -->
                 </div>
-                <div class="col-sm-6 col-xxl-3">
-                    <!-- New Customers -->
-                    <div class="block block-rounded d-flex flex-column h-100 mb-0">
-                        <div
-                            class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
+                <div class="col-sm-7 col-xxl-3">
+                    <div class="block block-rounded d-flex flex-column mb-4" v-if="$page.props.auth.user.role == 4">
+                        <div class="block-content block-content-full flex-grow d-flex align-items-center">
                             <dl class="mb-0">
-                                <dt class="fs-3 fw-bold">124</dt>
-                                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">New Customers</dd>
+                                <dt class="fs-4 fw-bold">Selamat Datang, {{ $page.props.auth.user.name }}.</dt>
                             </dl>
-                            <div class="item item-rounded-lg bg-body-light">
-                                <i class="far fa-user-circle fs-3 text-primary"></i>
-                            </div>
                         </div>
                         <div class="bg-body-light rounded-bottom">
-                            <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>View all customers</span>
-                                <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- END New Customers -->
-                </div>
-                <div class="col-sm-6 col-xxl-3">
-                    <!-- Messages -->
-                    <div class="block block-rounded d-flex flex-column h-100 mb-0">
-                        <div
-                            class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
-                            <dl class="mb-0">
-                                <dt class="fs-3 fw-bold">45</dt>
-                                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Messages</dd>
-                            </dl>
-                            <div class="item item-rounded-lg bg-body-light">
-                                <i class="far fa-paper-plane fs-3 text-primary"></i>
+                            <div
+                                class="block-content block-content-full my-2 block-content-sm fs-sm fw-medium fst-italic">
+                                <span>"Terima kasih sudah bergabung bersama kami."</span>
                             </div>
                         </div>
-                        <div class="bg-body-light rounded-bottom">
-                            <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>View all messages</span>
-                                <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
-                            </a>
-                        </div>
                     </div>
-                    <!-- END Messages -->
-                </div>
-                <div class="col-sm-6 col-xxl-3">
-                    <!-- Conversion Rate -->
-                    <div class="block block-rounded d-flex flex-column h-100 mb-0">
-                        <div
-                            class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
-                            <dl class="mb-0">
-                                <dt class="fs-3 fw-bold">4.5%</dt>
-                                <dd class="fs-sm fw-medium fs-sm fw-medium text-muted mb-0">Conversion Rate</dd>
-                            </dl>
-                            <div class="item item-rounded-lg bg-body-light">
-                                <i class="fa fa-chart-bar fs-3 text-primary"></i>
+                    <div class="row items-push">
+                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role == 1">
+                            <!-- Messages -->
+                            <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                                <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
+                                    <dl class="mb-0">
+                                        <dt class="fs-6 fw-bold">Pengguna</dt>
+                                        <dd class="fs-6 mb-0">{{ users }}</dd>
+                                    </dl>
+                                    <div class="item item-rounded-lg bg-body-light">
+
+                                        <i class="fa-regular fa-user fs-3"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Messages -->
+                        </div>
+                        <div class="col-sm-6 col-xxl-3">
+                            <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                                <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
+                                    <dl class="mb-0">
+                                        <dt class="fs-6 fw-bold">Layanan</dt>
+                                        <dd class="fs-6 mb-0">{{ services }}</dd>
+                                    </dl>
+                                    <div class="item item-rounded-lg bg-success">
+                                        <i class="fa-solid fa-list fs-3 text-white"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-body-light rounded-bottom">
-                            <a class="block-content block-content-full block-content-sm fs-sm fw-medium d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>View statistics</span>
-                                <i class="fa fa-arrow-alt-circle-right ms-1 opacity-25 fs-base"></i>
-                            </a>
+                        <div class="col-sm-6 col-xxl-3">
+                            <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                                <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
+                                    <dl class="mb-0">
+                                        <dt class="fs-6 fw-bold">Total Transaksi</dt>
+                                        <dd class="fs-6 mb-0">{{ transactions }}</dd>
+                                    </dl>
+                                    <div class="item item-rounded-lg" style="background-color: #f4782e;">
+                                        <i class="fa-brands fa-laravel fa-2x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Conversion Rate-->
+                        </div>
+                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role == 1">
+                            <!-- Messages -->
+                            <div class="block block-rounded d-flex flex-column h-100 mb-0">
+                                <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
+                                    <dl class="mb-0">
+                                        <dt class="fs-6 fw-bold">Uang Masuk</dt>
+                                        <dd class="fs-6 mb-0">{{ formatRupiah(transactionsAdmin) }}</dd>
+                                    </dl>
+                                    <div class="item item-rounded-lg" style="background-color: #246bc7;">
+                                        <i class="fa-brands fa-php fa-2x text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Messages -->
                         </div>
                     </div>
-                    <!-- END Conversion Rate-->
                 </div>
             </div>
             <!-- END Overview -->
