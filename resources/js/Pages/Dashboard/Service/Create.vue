@@ -75,7 +75,7 @@ const formatRupiah = (value) => {
 <template>
     <Modal id="crateCService" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Tambah Service</h3>
+            <h3 class="block-title">Tambah Layanan</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>
@@ -84,18 +84,16 @@ const formatRupiah = (value) => {
         </template>
         <template #body>
             <div class="mb-3">
-                <label class="form-label" for="category_id">Pegawai</label>
+                <label class="form-label" for="category_id">Kategori Layanan</label>
                 <InputError :message="form.errors.category_id" />
-
-                <select class="form-select" v-model="form.category_id" id="category_id" name="category_id">
-                    <!-- <option selected>Open this select menu</option> -->
-                    <option value="1">Software Development</option>
-                    <option value="2">Digital Marketing</option>
-                </select>
+                <VueSelect v-model="form.category_id" id="category_id" name="category_id" placeholder="Pilih Kategori"
+                    :options="category_service" label="name" :reduce="(category_service) => category_service.id">
+                </VueSelect>
+                <InputError :message="form.errors.category_id" />
             </div>
 
             <div class="mb-3">
-                <InputLabel for="name" value="name" />
+                <InputLabel for="name" value="Nama" />
                 <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
                     placeholder="Name" />
                 <InputError :message="form.errors.name" class="mt-1" />
@@ -109,11 +107,10 @@ const formatRupiah = (value) => {
             </div>
 
             <div class="mb-3">
-                <InputLabel for="price" value="price" />
+                <InputLabel for="price" value="Harga" /> {{ formatRupiah(form.price) }}
                 <TextInput id="price" ref="price" v-model="form.price" type="number" class="form-control"
-                    placeholder="price" />
+                    placeholder="Harga" />
                 <InputError :message="form.errors.price" class="mt-1" />
-                <span>Formatted Price: {{ formatRupiah(form.price) }}</span>
             </div>
         </template>
         <template #footer>

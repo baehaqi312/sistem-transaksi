@@ -87,7 +87,7 @@ onUnmounted(() => {
             </div>
 
             <div class="mb-3">
-                <InputLabel for="phone" value="phone" />
+                <InputLabel for="phone" value="No Handphone" />
                 <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control"
                     placeholder="No Telephone" />
                 <InputError :message="form.errors.phone" class="mt-1" />
@@ -110,9 +110,10 @@ onUnmounted(() => {
             <div class="mb-3">
                 <InputLabel for="role" value="Role Pengguna" />
                 <select class="form-select" v-model="form.role" id="role" placeholder="Password Confirmation">
-                    <option value="1">Direktur Keuangan</option>
-                    <option value="3">Admin Keuangan</option>
-                    <option value="4">Pelanggan</option>
+                    <option value="" selected disabled>Pilih Role Pengguna</option>
+                    <option value="1">Super Administrartor</option>
+                    <option value="2">Devisi Marketing</option>
+                    <option value="3">Pelanggan</option>
                 </select>
             </div>
 

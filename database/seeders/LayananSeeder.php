@@ -21,7 +21,7 @@ class LayananSeeder extends Seeder
             'id' => 1,
             'category_id' => 1,
             'name' => 'Landing Page',
-            'description' => 'Test',
+            'description' => '-',
             'price' => 649000,
             'created_at' => Carbon::now(),
         ]);
@@ -29,7 +29,7 @@ class LayananSeeder extends Seeder
             'id' => 2,
             'category_id' => 1,
             'name' => 'Professional',
-            'description' => 'Test',
+            'description' => '-',
             'price' => 4499000,
             'created_at' => Carbon::now(),
         ]);
@@ -37,7 +37,7 @@ class LayananSeeder extends Seeder
             'id' => 3,
             'category_id' => 1,
             'name' => 'Business',
-            'description' => 'Test',
+            'description' => '-',
             'price' => 7499000,
             'created_at' => Carbon::now(),
         ]);

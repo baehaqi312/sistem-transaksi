@@ -54,15 +54,18 @@ const formatRupiah = (number) => {
                 <div class="col-sm-5 col-xxl-3">
                     <div class="flex-grow">
                         <div class="block block-rounded d-flex flex-column mb-3"
-                            v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 3">
+                            v-if="$page.props.auth.user.role === 1 || $page.props.auth.user.role === 2">
                             <div class="block-content block-content-full flex-grow d-flex align-items-center">
                                 <img class="img-avatar img-avatar50 border border-2 border-primary"
                                     style="width: 90px; height: 90px;" src="https://picsum.photos/300/300"
                                     alt="User Photo" />
                                 <dl class="ms-4 mb-0">
                                     <dt class="fs-4 fw-bold">Selamat Datang, {{ $page.props.auth.user.name }}.</dt>
-                                    <dd class="fs-6 fw-medium text-muted mb-0">
-                                        {{ $page.props.auth.user.name }}
+                                    <dd v-if="$page.props.auth.user.role === 1" class="fs-6 fw-medium text-muted mb-0">
+                                        Super Administrartor
+                                    </dd>
+                                    <dd v-if="$page.props.auth.user.role === 2" class="fs-6 fw-medium text-muted mb-0">
+                                        Devisi Marketing
                                     </dd>
                                 </dl>
                             </div>
@@ -73,7 +76,7 @@ const formatRupiah = (number) => {
                                 </div>
                             </div>
                         </div>
-                        <div class="block block-rounded d-flex flex-column mb-3" v-if="$page.props.auth.user.role == 4">
+                        <div class="block block-rounded d-flex flex-column mb-3" v-if="$page.props.auth.user.role === 4">
                             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" v-for="items in category_services">
@@ -95,7 +98,7 @@ const formatRupiah = (number) => {
                     </div>
                 </div>
                 <div class="col-sm-7 col-xxl-3">
-                    <div class="block block-rounded d-flex flex-column mb-4" v-if="$page.props.auth.user.role == 4">
+                    <div class="block block-rounded d-flex flex-column mb-4" v-if="$page.props.auth.user.role === 3">
                         <div class="block-content block-content-full flex-grow d-flex align-items-center">
                             <dl class="mb-0">
                                 <dt class="fs-4 fw-bold">Selamat Datang, {{ $page.props.auth.user.name }}.</dt>
@@ -109,7 +112,7 @@ const formatRupiah = (number) => {
                         </div>
                     </div>
                     <div class="row items-push">
-                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role == 1">
+                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role === 1">
                             <!-- Messages -->
                             <div class="block block-rounded d-flex flex-column h-100 mb-0">
                                 <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
@@ -152,7 +155,7 @@ const formatRupiah = (number) => {
                             </div>
                             <!-- END Conversion Rate-->
                         </div>
-                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role == 1">
+                        <div class="col-sm-6 col-xxl-3" v-if="$page.props.auth.user.role === 1">
                             <!-- Messages -->
                             <div class="block block-rounded d-flex flex-column h-100 mb-0">
                                 <div class="p-4 flex-grow-1 d-flex justify-content-between align-items-center">
@@ -161,7 +164,7 @@ const formatRupiah = (number) => {
                                         <dd class="fs-6 mb-0">{{ formatRupiah(transactionsAdmin) }}</dd>
                                     </dl>
                                     <div class="item item-rounded-lg" style="background-color: #246bc7;">
-                                        <i class="fa-brands fa-php fa-2x text-white"></i>
+                                        <i class="fa-solid fa-money-bill-wave fa-2x text-white"></i>
                                     </div>
                                 </div>
                             </div>

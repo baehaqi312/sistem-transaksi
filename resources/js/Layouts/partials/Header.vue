@@ -177,16 +177,15 @@ watch(
                   <img class="img-avatar img-avatar48 img-avatar-thumb" src="@/assets/media/avatars/avatar10.jpg"
                     alt="">
                   <p class="mt-2 mb-0 fw-medium">{{ $page.props.auth.user.name }}</p>
-                  <p class="mb-0 text-muted fs-sm fw-medium">Web Developer</p>
+                  <p v-if="$page.props.auth.user.role === 1" class="mb-0 text-muted fs-sm fw-medium">Super Administrartor</p>
+                  <p v-if="$page.props.auth.user.role === 2" class="mb-0 text-muted fs-sm fw-medium">Devisi Marketing</p>
+                  <p v-if="$page.props.auth.user.role === 3" class="mb-0 text-muted fs-sm fw-medium">Pelanggan</p>
                 </div>
                 <div class="p-2">
                   <Link class="dropdown-item d-flex align-items-center justify-content-between"
                     :href="route('profile.edit')">
                   <span class="fs-sm fw-medium">Profile</span>
                   </Link>
-                  <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
-                    <span class="fs-sm fw-medium">Settings</span>
-                  </a>
                 </div>
                 <div role="separator" class="dropdown-divider m-0"></div>
                 <div class="p-2">
@@ -199,13 +198,15 @@ watch(
             </div>
             <!-- END User Dropdown -->
 
-            <!-- Toggle Side Overlay -->
-            <button type="button" class="btn btn-sm btn-alt-secondary ms-2 space-x-1"
-              @click="store.sideOverlay({ mode: 'toggle' })">
-              <i class="fa fa-fw fa-cart-plus"></i>
-              <span v-if="cart && cart.items.length" class="text-primary">•</span>
-            </button>
-            <!-- END Toggle Side Overlay -->
+            <template v-if="$page.props.auth.user.role == 3">
+              <!-- Toggle Side Overlay -->
+              <button type="button" class="btn btn-sm btn-alt-secondary ms-2 space-x-1"
+                @click="store.sideOverlay({ mode: 'toggle' })">
+                <i class="fa fa-fw fa-cart-plus"></i>
+                <span v-if="cart && cart.items.length" class="text-primary">•</span>
+              </button>
+              <!-- END Toggle Side Overlay -->
+            </template>
           </div>
           <!-- END Right Section -->
         </slot>

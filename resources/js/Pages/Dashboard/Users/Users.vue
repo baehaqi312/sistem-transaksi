@@ -130,13 +130,9 @@ watch(
                                                     </div>
                                                     <div v-if="user.role === 2"
                                                         class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
-                                                        Direktur Keuangan
+                                                        Devisi Marketing
                                                     </div>
                                                     <div v-if="user.role === 3"
-                                                        class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
-                                                        Marketing
-                                                    </div>
-                                                    <div v-if="user.role === 4"
                                                         class="fs-xs m-0 p-1 px-2 d-inline-block bg-body-light rounded-1">
                                                         Pelanggan
                                                     </div>

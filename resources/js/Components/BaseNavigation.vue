@@ -66,58 +66,43 @@ function linkClicked(e, submenu) {
           <span class="nav-main-link-name">Pengguna Sistem</span>
         </NavLink>
       </li>
+    </template>
+
+    <template v-if="$page.props.auth.user.role == 2">
+      <li class="nav-main-heading">MASTER LAYANAN & BROSUR</li>
       <li class="nav-main-item">
-        <NavLink href="#">
+        <NavLink :href="route('service.index')" :active="route().current('service.index')"
+          @click="linkClicked($event, false)">
           <i class="nav-main-link-icon si si-speedometer"></i>
-          <span class="nav-main-link-name">Log Pengguna</span>
+          <span class="nav-main-link-name">Daftar Layanan</span>
+        </NavLink>
+      </li>
+      <li class="nav-main-item">
+        <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')"
+          @click="linkClicked($event, false)">
+          <i class="nav-main-link-icon si si-speedometer"></i>
+          <span class="nav-main-link-name">Daftar Brosur</span>
         </NavLink>
       </li>
     </template>
-    <li class="nav-main-heading">PRODUCT & SERVICE</li>
-    <template v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 3">
+
+    <template v-if="$page.props.auth.user.role == 3">
+      <li class="nav-main-heading">DAFTAR LAYANAN</li>
       <li class="nav-main-item">
-        <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
-          <!-- <i class="nav-main-link-icon si si-energy"></i> -->
-          <!-- <i class="nav-main-link-icon fa-solid fa-hospital-user"></i> -->
-          <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
-          <span class="nav-main-link-name">Master Layanan</span>
-        </a>
-        <ul class="nav-main-submenu">
-          <li class="nav-main-item">
-            <NavLink :href="route('category_service.index')" :active="route().current('category_service.index')"
-              @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Daftar Kategori Service</span>
-            </NavLink>
-          </li>
-          <li class="nav-main-item">
-            <NavLink :href="route('service.index')" :active="route().current('service.index')"
-              @click="linkClicked($event, false)">
-              <span class="nav-main-link-name">Daftar Service</span>
-            </NavLink>
-          </li>
-        </ul>
+        <NavLink :href="route('software_development.index')" :active="route().current('software_development.index')"
+          @click="linkClicked($event, false)">
+          <i class="nav-main-link-icon si si-speedometer"></i>
+          <span class="nav-main-link-name">Pembuatan Website</span>
+        </NavLink>
+      </li>
+      <li class="nav-main-item">
+        <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')"
+          @click="linkClicked($event, false)">
+          <i class="nav-main-link-icon si si-speedometer"></i>
+          <span class="nav-main-link-name">Kelola Sosial Media</span>
+        </NavLink>
       </li>
     </template>
-    <li class="nav-main-item">
-      <a href="#" class="nav-main-link nav-main-link-submenu" @click.prevent="linkClicked($event, true)">
-        <i class="nav-main-link-icon fa-solid fa-list-ul"></i>
-        <span class="nav-main-link-name">Layanan</span>
-      </a>
-      <ul class="nav-main-submenu">
-        <li class="nav-main-item">
-          <NavLink :href="route('software_development.index')" :active="route().current('software_development.index')"
-            @click="linkClicked($event, false)">
-            <span class="nav-main-link-name">Pembuatan Website</span>
-          </NavLink>
-        </li>
-        <li class="nav-main-item">
-          <NavLink :href="route('digital_marketing.index')" :active="route().current('digital_marketing.index')"
-            @click="linkClicked($event, false)">
-            <span class="nav-main-link-name">Kelola Sosial Media</span>
-          </NavLink>
-        </li>
-      </ul>
-    </li>
 
     <li class="nav-main-heading">Data Keuangan</li>
     <li class="nav-main-item">
