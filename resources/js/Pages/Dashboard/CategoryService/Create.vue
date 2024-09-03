@@ -79,19 +79,19 @@ onUnmounted(() => {
         </template>
         <template #body>
             <div class="mb-3">
-                <label class="form-label" for="image">icon</label>
+                <label class="form-label" for="image">Brosur</label>
                 <input class="form-control" type="file" @change="handleFileUpload" id="image" name="image" />
             </div>
 
             <div class="mb-3">
-                <InputLabel for="name" value="name" />
+                <InputLabel for="name" value="Name Brosur" />
                 <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
-                    placeholder="Name" />
+                    placeholder="Name Brosur" />
                 <InputError :message="form.errors.name" class="mt-1" />
             </div>
 
             <div class="mb-3">
-              <label class="form-label" for="kode">Template</label>
+              <label class="form-label" for="kode">Kategori</label>
               <select class="form-select" v-model="form.kode" id="kode" name="kode">
                 <!-- <option selected>Open this select menu</option> -->
                 <option value="1">Software Development</option>

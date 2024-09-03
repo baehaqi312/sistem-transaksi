@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
     //Transaction
     Route::resource('transactions', TransactionController::class);
     Route::get('/transactions/{transaction}/pdf', [TransactionController::class, 'generatePDF'])->name('transactions.generatePDF');
+    Route::get('cetak_laporan', [TransactionController::class, 'generateLaporan']);
 });
 
 require __DIR__.'/auth.php';

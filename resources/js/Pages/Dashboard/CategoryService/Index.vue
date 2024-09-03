@@ -34,7 +34,7 @@ const data = reactive({
 
 <template>
 
-    <Head title="Pengguna" />
+    <Head title="Daftar Brosur" />
     <AuthenticatedLayout>
         <CreateCategoryService title="Create Category" :show="data.createModal" @close="data.createModal = false" />
         <UpdateCategoryService title="Update Category" :show="data.updateModal" @close="data.updateModal = false"
@@ -47,7 +47,7 @@ const data = reactive({
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                     <div class="flex-grow-1">
                         <h1 class="h3 fw-bold mb-1">
-                            Daftar Kategori Service
+                            Daftar Brosur
                         </h1>
                     </div>
                     <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -56,7 +56,7 @@ const data = reactive({
                                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
-                                Daftar Kategori Service
+                                Daftar Brosur
                             </li>
                         </ol>
                     </nav>
@@ -67,11 +67,11 @@ const data = reactive({
 
         <div class="content pt-2">
             <div class="d-flex flex-sm-row justify-content-between align-items-center">
-                <h2 class="content-heading">Daftar Kategori Service</h2>
+                <h2 class="content-heading">Daftar Brosur</h2>
                 <div>
                     <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
                         <i class="fa-solid fa-plus me-1"></i>
-                        Tambah Users
+                        Tambah Brosur
                     </button>
                 </div>
             </div>

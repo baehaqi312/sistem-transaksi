@@ -104,13 +104,14 @@ function linkClicked(e, submenu) {
       </li>
     </template>
 
-    <li class="nav-main-heading">Data Keuangan</li>
+    <li v-if="$page.props.auth.user.role == 1" class="nav-main-heading">Data Keuangan</li>
+    <li v-else class="nav-main-heading">Data Transaksi</li>
     <li class="nav-main-item">
       <NavLink :href="route('transactions.index')" :active="route().current('transactions.index')"
         @click="linkClicked($event, false)">
         <i class="nav-main-link-icon far fa-file"></i>
-        <span v-if="$page.props.auth.user.role == 4" class="nav-main-link-name">Transaksi</span>
-        <span v-else class="nav-main-link-name">Laporan Transaksi</span>
+        <span v-if="$page.props.auth.user.role == 1" class="nav-main-link-name">Laporan Transaksi</span>
+        <span v-else class="nav-main-link-name">Daftar Transaksi</span>
       </NavLink>
     </li>
   </ul>

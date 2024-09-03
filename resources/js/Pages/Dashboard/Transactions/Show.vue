@@ -44,9 +44,9 @@ onMounted(() => {
                     router.patch(route('transactions.update', props.transactions.id));
                 },
                 onPending: function (result) {
-                    // console.log('Pending:', result);
+                    console.log('Pending:', result);
                     // Handle pending
-                    router.patch(route('transactions.update', props.transactions.id));
+                    // router.patch(route('transactions.update', props.transactions.id));
                 },
                 onError: function (result) {
                     // console.log('Error:', result);

@@ -53,7 +53,7 @@ const formatRupiah = (value) => {
 
 <template>
 
-    <Head title="Pengguna" />
+    <Head title="Daftar Layanan" />
     <AuthenticatedLayout>
         <CreateCategoryService title="Create Resume Pasien" :show="data.createModal" @close="data.createModal = false"
             :category_service="props.category_service" />

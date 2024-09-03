@@ -86,7 +86,10 @@ const data = reactive({
       <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
           <div class="flex-grow-1">
-            <h1 class="h3 fw-bold mb-1">
+            <h1 class="h3 fw-bold mb-1" v-if="$page.props.auth.user.role == 1">
+              Laporan Transaksi
+            </h1>
+            <h1 v-else class="h3 fw-bold mb-1">
               Daftar Transaksi
             </h1>
           </div>
@@ -95,7 +98,10 @@ const data = reactive({
               <li class="breadcrumb-item">
                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
               </li>
-              <li class="breadcrumb-item" aria-current="page">
+              <li class="breadcrumb-item" aria-current="page" v-if="$page.props.auth.user.role == 1">
+                Laporan Transaksi
+              </li>
+              <li v-else class="breadcrumb-item" aria-current="page">
                 Daftar Transaksi
               </li>
             </ol>
@@ -129,10 +135,10 @@ const data = reactive({
                   href="javascript:void(0)" @click="setStatusFilter('pending')">
                   Pending
                 </a>
-                <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
+                <!-- <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)" @click="setStatusFilter('active')">
                   Active
-                </a>
+                </a> -->
                 <a class="dropdown-item fw-medium d-flex align-items-center justify-content-between"
                   href="javascript:void(0)" @click="setStatusFilter('completed')">
                   Completed
@@ -143,6 +149,13 @@ const data = reactive({
                 </a>
               </div>
             </div>
+
+            <a href="cetak_laporan" target="_blank" v-if="$page.props.auth.user.role == 1">
+              <button type="button" class="btn btn-sm btn-success ms-2">
+                <i class="fa-solid fa-file-pdf"></i>
+                Cetak Laporan
+              </button>
+            </a>
           </div>
         </template>
 
@@ -211,7 +224,7 @@ const data = reactive({
                         </button>
                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-end fs-sm"
                           aria-labelledby="dropdown-recent-orders-filters">
-                          <template v-if="$page.props.auth.user.role == 4">
+                          <template v-if="$page.props.auth.user.role == 3">
                             <Link type="button" class="dropdown-item fw-medium d-flex align-items-center"
                               v-if="transaction.status === 'pending'" :href="(route('transactions.show', transaction))">
                             Bayar Sekarang
@@ -229,7 +242,7 @@ const data = reactive({
                       </div>
                     </td>
                   </tr>
-                  <tr v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
+                  <!-- <tr v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2">
                     <td colspan="5" class="text-end"><strong>Sub Total</strong></td>
                     <td class="text-end">
                       <strong>{{ formatRupiah(props.totalSub) }}</strong>
@@ -242,7 +255,7 @@ const data = reactive({
                       <strong>{{ formatRupiah(props.totalIncome) }}</strong>
                     </td>
                     <td></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
               <div v-else class="text-center fs-sm fw-medium text-muted">

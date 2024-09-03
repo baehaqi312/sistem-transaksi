@@ -85,9 +85,14 @@ const formatRupiah = (value) => {
         <template #body>
             <div class="mb-3">
                 <label class="form-label" for="category_id">Pegawai</label>
-                <VueSelect v-model="form.category_id" id="category_id" name="category_id" placeholder="Cai Pegawai"
+                <!-- <VueSelect v-model="form.category_id" id="category_id" name="category_id" placeholder="Cai Pegawai"
                     :options="category_service" label="name" :reduce="(category_service) => category_service.id">
-                </VueSelect>
+                </VueSelect> -->
+                <select class="form-select" v-model="form.category_id" id="category_id" name="category_id">
+                    <option value="" disabled>Pilih Kategori</option>
+                    <option value="1" :selected="form.category_id == 1">Software Development</option>
+                    <option value="2" :selected="form.category_id == 2">Digital Marketing</option>
+                </select>
                 <InputError :message="form.errors.category_id" />
             </div>
 

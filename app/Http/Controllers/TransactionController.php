@@ -49,7 +49,7 @@ class TransactionController extends Controller
             $transactions->orderBy('transactions.created_at', 'desc');
         }
 
-        if (Auth::user()->role === 4) {
+        if (Auth::user()->role === 3) {
             $transactions->where('user_id', auth()->id());
         }
 
@@ -201,5 +201,22 @@ class TransactionController extends Controller
         $pdf = Pdf::loadView('pdf.CetakInvoice', $data);
         
         return $pdf->stream('document.pdf');
+    }
+
+    public function generateLaporan()
+    {
+        $transactions = Transaction::with(['items.service.categoryservices', 'user'])->where('status', 'completed')->get();
+
+        $totalIncome = Transaction::where('status', 'completed')->sum('total');
+
+        $data = [
+            'date' => date('m/d/Y'),
+            'transactions' => $transactions,
+            'totalIncome' => $totalIncome
+        ];
+
+        $pdf = Pdf::loadView('pdf.CetakLaporan', $data);
+        
+        return $pdf->stream('laporan.pdf');
     }
 }

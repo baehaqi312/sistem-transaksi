@@ -126,8 +126,8 @@ const submit = () => {
                     <!-- <button @click="checkout" v-if="cart && cart.items.length">Checkout</button> -->
                     <!-- <button> -->
                     <form @submit.prevent="submit">
-                      <button type="submit" class="btn btn-sm btn-alt-danger" v-if="cart && cart.items.length">
-                        <span class="fs-sm fw-medium">Checkout</span>
+                      <button type="submit" class="btn btn-sm btn-success mt-3 w-100" v-if="cart && cart.items.length">
+                        <span class="fs-sm fw-medium">Pesan</span>
                       </button>
                     </form>
                     <!-- </button> -->

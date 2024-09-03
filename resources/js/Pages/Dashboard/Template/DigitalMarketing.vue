@@ -30,7 +30,7 @@ const addToCart = (serviceId) => {
 
 <template>
 
-    <Head title="Pengguna" />
+    <Head title="Digital Marketing" />
     <AuthenticatedLayout>
         <!-- Hero -->
         <div class="">
@@ -81,8 +81,8 @@ const addToCart = (serviceId) => {
                                         <input type="hidden" v-model="quantity[service.id]" min="1"
                                             placeholder="Quantity">
                                         <!-- <button type="submit">Add to Cart</button> -->
-                                        <button type="submit" class="btn btn-warning px-4"><i
-                                                class="fa fa-fw fa-cart-plus"></i> Order</button>
+                                        <button type="submit" class="btn btn-warning px-4">
+                                            Masukan <i class="fa fa-fw fa-cart-plus"></i></button>
                                     </form>
                                 </div>
                             </template>
