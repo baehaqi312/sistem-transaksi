@@ -57,7 +57,7 @@ onUnmounted(() => {
 <template>
     <Modal id="deleteCategoryService" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Delete Account {{ props.category_service?.name }}</h3>
+            <h3 class="block-title">Delete Brosur {{ props.category_service?.name }}</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>
@@ -66,7 +66,7 @@ onUnmounted(() => {
         </template>
         <template #body>
             <p class="fs-sm text-muted">
-                Are you sure you want to delete your account {{ props.category_service?.name }} ?
+                Are you sure you want to delete your brosur {{ props.category_service?.name }} ?
             </p>
         </template>
         <template #footer>
@@ -74,7 +74,7 @@ onUnmounted(() => {
 
             <DangerButton class="ms-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
                 @click="destroy">
-                Delete Account
+                Delete Brosur
             </DangerButton>
         </template>
     </Modal>

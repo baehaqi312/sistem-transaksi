@@ -70,7 +70,7 @@ onUnmounted(() => {
 <template>
     <Modal id="crateCategoryService" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Tambah Kategori</h3>
+            <h3 class="block-title">Tambah Brosur</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>

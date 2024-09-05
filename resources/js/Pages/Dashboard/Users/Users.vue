@@ -163,7 +163,7 @@ watch(
                                                         class="dropdown-item fw-medium d-flex align-items-center"
                                                         @click="(data.updateModal = true), data.user = user">
                                                         <i class="fa-solid fa-envelope me-3"></i>
-                                                        Ubah E-Mail Pengguna
+                                                        Ubah Pengguna
                                                     </a>
                                                     <a type="button"
                                                         class="dropdown-item fw-medium d-flex align-items-center"

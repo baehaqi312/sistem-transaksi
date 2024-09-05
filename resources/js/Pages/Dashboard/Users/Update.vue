@@ -69,7 +69,7 @@ onUnmounted(() => {
 <template>
     <Modal id="updateUsers" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Tambah Users</h3>
+            <h3 class="block-title">Update Users</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>
@@ -91,7 +91,7 @@ onUnmounted(() => {
                 </div>
 
                 <div class="mb-3">
-                    <InputLabel for="phone" value="phone" />
+                    <InputLabel for="phone" value="No Handphone" />
                     <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control" placeholder="No Telephone" />
                     <InputError :message="form.errors.phone" class="mt-1" />
                 </div>
@@ -125,7 +125,7 @@ onUnmounted(() => {
 
             <button type="submit" class="btn btn-primary ms-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
                 @click="updateNewUsers">
-                Simpan Pengguna
+                Update Pengguna
             </button>
         </template>
     </Modal>
