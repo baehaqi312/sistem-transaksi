@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Laporan</title>
     <style>
-        .garis1{
-        border-top:3px solid black;
-        height: 2px;
-        border-bottom:1px solid black;
+        .garis1 {
+            border-top: 3px solid black;
+            height: 2px;
+            border-bottom: 1px solid black;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ public_path('print/style.css') }}">
@@ -80,7 +80,7 @@
                 <td class="text-center">{{ $item->user->phone }}</td>
                 {{-- <td>{{ $item->service->name }} - {{ $item->service->categoryservices->name }}</td> --}}
                 {{-- <td class="text-end">{{ $item->items->quantity }}</td> --}}
-                @foreach($item->items as $comment)
+                @foreach ($item->items as $comment)
                     <td class="text-center">{{ $comment->quantity }}</td>
                     <td class="text-end">{{ $comment->price }}</td>
                 @endforeach

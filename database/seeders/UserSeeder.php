@@ -17,8 +17,9 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 1,
-            'name' => 'Wibi Prasetia S.T',
-            'email' => 'admin@admin.com',
+            'name' => 'Direktur Keuangan',
+            // 'name' => 'Wibi Prasetia S.T',
+            'email' => 'admin@init.co.id',
             'phone' => '+6283818062960',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),
@@ -30,8 +31,8 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'id' => 2,
-            'name' => 'Rosmawati',
-            'email' => 'marketing@admin.com',
+            'name' => 'Marketing',
+            'email' => 'marketing@init.co.id',
             'phone' => '+6283818062960',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),
@@ -44,7 +45,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 3,
             'name' => 'Luthfi Baehaqi',
-            'email' => 'pelanggan@admin.com',
+            'email' => 'pelanggan@init.co.id',
             'phone' => '+6283818062960',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('12345678'),

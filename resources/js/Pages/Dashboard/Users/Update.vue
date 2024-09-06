@@ -17,17 +17,17 @@ const props = defineProps({
 })
 
 const form = useForm({
-    name:'',
-    email:'',
-    phone:'',
-    password:'',
-    password_confirmation:'',
-    role:''
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    password_confirmation: '',
+    role: ''
 })
 
 const updateNewUsers = () => {
     form.put(route('users.update', props.user?.id), {
-        preserveScroll:true,
+        preserveScroll: true,
         onSuccess: () => {
             closeModal()
             form.reset()
@@ -69,7 +69,7 @@ onUnmounted(() => {
 <template>
     <Modal id="updateUsers" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Update Users</h3>
+            <h3 class="block-title">Update Pengguna</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>
@@ -80,34 +80,40 @@ onUnmounted(() => {
             <form @submit.prevent="updateNewUsers">
                 <div class="mb-3">
                     <InputLabel for="name" value="Nama" />
-                    <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Nama" />
+                    <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                        placeholder="Nama" />
                     <InputError :message="form.errors.name" class="mt-1" />
                 </div>
-    
+
                 <div class="mb-3">
                     <InputLabel for="email" value="Email" />
-                    <TextInput id="email" ref="email" v-model="form.email" type="email" class="form-control" placeholder="Email" />
+                    <TextInput id="email" ref="email" v-model="form.email" type="email" class="form-control"
+                        placeholder="Email" />
                     <InputError :message="form.errors.email" class="mt-1" />
                 </div>
 
                 <div class="mb-3">
                     <InputLabel for="phone" value="No Handphone" />
-                    <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control" placeholder="No Telephone" />
+                    <TextInput id="phone" ref="phone" v-model="form.phone" type="text" class="form-control"
+                        placeholder="No Telephone" />
                     <InputError :message="form.errors.phone" class="mt-1" />
                 </div>
-    
+
                 <div class="mb-3">
                     <InputLabel for="password" value="Password" />
-                    <TextInput id="password" ref="password" v-model="form.password" type="password" class="form-control" placeholder="Password" />
+                    <TextInput id="password" ref="password" v-model="form.password" type="password" class="form-control"
+                        placeholder="Password" />
                     <InputError :message="form.errors.password" class="mt-1" />
                 </div>
-    
+
                 <div class="mb-3">
                     <InputLabel for="password_confirmation" value="Password Confirmation" />
-                    <TextInput id="password_confirmation" ref="password_confirmation" v-model="form.password_confirmation" type="password" class="form-control" placeholder="Password Confirmation" />
+                    <TextInput id="password_confirmation" ref="password_confirmation"
+                        v-model="form.password_confirmation" type="password" class="form-control"
+                        placeholder="Password Confirmation" />
                     <InputError :message="form.errors.password_confirmation" class="mt-1" />
                 </div>
-    
+
                 <div class="mb-3">
                     <InputLabel for="role" value="Role Pengguna" />
                     <select class="form-select" v-model="form.role" id="role">
@@ -123,8 +129,8 @@ onUnmounted(() => {
         <template #footer>
             <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
 
-            <button type="submit" class="btn btn-primary ms-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
-                @click="updateNewUsers">
+            <button type="submit" class="btn btn-primary ms-2" :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing" @click="updateNewUsers">
                 Update Pengguna
             </button>
         </template>

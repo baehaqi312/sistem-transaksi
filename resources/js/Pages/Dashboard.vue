@@ -76,7 +76,8 @@ const formatRupiah = (number) => {
                                 </div>
                             </div>
                         </div>
-                        <div class="block block-rounded d-flex flex-column mb-3" v-if="$page.props.auth.user.role === 3">
+                        <div class="block block-rounded d-flex flex-column mb-3"
+                            v-if="$page.props.auth.user.role === 3">
                             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" v-for="items in category_services">
@@ -149,7 +150,7 @@ const formatRupiah = (number) => {
                                         <dd class="fs-6 mb-0">{{ transactions }}</dd>
                                     </dl>
                                     <div class="item item-rounded-lg" style="background-color: #f4782e;">
-                                        <i class="fa-brands fa-laravel fa-2x text-white"></i>
+                                        <i class="fa-solid fa-file-invoice fa-2x text-white"></i>
                                     </div>
                                 </div>
                             </div>

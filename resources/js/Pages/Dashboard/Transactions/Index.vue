@@ -174,7 +174,8 @@ const data = reactive({
                     <th @click="setSort('invoice_code')">Order ID <i class="gg-select float-end"></i></th>
                     <th @click="setSort('user.name')" class="d-none d-sm-table-cell">Customer <i
                         class="gg-select float-end"></i></th>
-                    <th @click="setSort('user.phone')" class="d-none d-sm-table-cell">Phone <i
+                    <th v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2"
+                      @click="setSort('user.phone')" class="d-none d-sm-table-cell">Phone <i
                         class="gg-select float-end"></i></th>
                     <th @click="setSort('status')" class="text-center">Status <i class="gg-select float-end"></i>
                     </th>
@@ -197,8 +198,9 @@ const data = reactive({
                       <a class="fw-semibold" href="javascript:void(0)">{{ transaction.user.name }}</a>
                       <p class="fs-sm fw-medium text-muted mb-0">{{ transaction.user.email }}</p>
                     </td>
-                    <td class="d-none d-sm-table-cell fw-semibold text-muted">
-                      <a href="#">
+                    <td v-if="$page.props.auth.user.role == 1 || $page.props.auth.user.role == 2"
+                      class="d-none d-sm-table-cell fw-semibold text-muted">
+                      <a :href="`https://wa.me/` + transaction.user.phone" target="_blank">
                         {{ transaction.user.phone }}
                       </a>
                     </td>
@@ -236,7 +238,7 @@ const data = reactive({
                           </a>
                           <a type="button" :href="`/transactions/${transaction.id}/pdf`" target="_blank"
                             class="dropdown-item fw-medium d-flex align-items-center">
-                          Print Invoice
+                            Print Invoice
                           </a>
                         </div>
                       </div>

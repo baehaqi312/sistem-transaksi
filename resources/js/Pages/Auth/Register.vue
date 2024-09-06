@@ -71,9 +71,12 @@ store.setColorTheme({
                             <InputError class="mt-2" :message="form.errors.email" />
                         </div>
                         <div class="mb-3">
-                            <TextInput id="phone" type="text" class="form-control form-control-alt form-control-lg"
-                                name="login-username" placeholder="No Telephone"
-                                :class="{ 'is-invalid': form.errors.phone }" v-model="form.phone" />
+                            <div class="input-group">
+                                <span class="input-group-text input-group-text-alt">+62</span>
+                                <TextInput id="phone" type="text" class="form-control form-control-alt form-control-lg"
+                                    name="login-username" placeholder="No Telephone"
+                                    :class="{ 'is-invalid': form.errors.phone }" v-model="form.phone" />
+                            </div>
                             <InputError class="mt-2" :message="form.errors.phone" />
                         </div>
                         <div class="mb-3">

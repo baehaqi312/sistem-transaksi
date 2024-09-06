@@ -57,7 +57,7 @@ watch(
                 <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                     <div class="flex-grow-1">
                         <h1 class="h3 fw-bold mb-1">
-                            Data Pasien
+                            Pengguna Sistem
                         </h1>
                     </div>
                     <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -66,7 +66,7 @@ watch(
                                 <Link class="link-fx" :href="route('dashboard')">Dashboard</Link>
                             </li>
                             <li class="breadcrumb-item" aria-current="page">
-                                Pasien
+                                Pengguna Sistem
                             </li>
                         </ol>
                     </nav>
@@ -89,7 +89,7 @@ watch(
                         <div class="dropdown d-inline-block">
                             <button @click="data.createModal = true" type="button" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-plus me-1"></i>
-                                Tambah Users
+                                Tambah Pengguna
                             </button>
                         </div>
                     </div>

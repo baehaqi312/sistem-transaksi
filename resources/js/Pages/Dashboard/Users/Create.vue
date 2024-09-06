@@ -64,7 +64,7 @@ onUnmounted(() => {
 <template>
     <Modal id="crateUsers" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Tambah Users</h3>
+            <h3 class="block-title">Tambah Pengguna</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>

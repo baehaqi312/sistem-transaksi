@@ -27,7 +27,7 @@ const form = useForm({
 
 const updateNewService = () => {
     form.put(route('service.update', props.service?.id), {
-        preserveScroll:true,
+        preserveScroll: true,
         onSuccess: () => {
             closeModal()
             form.reset()
@@ -67,15 +67,15 @@ onUnmounted(() => {
 })
 
 const formatRupiah = (value) => {
-  if (!value) return 'Rp 0';
-  return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (!value) return 'Rp 0';
+    return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 </script>
 
 <template>
     <Modal id="updateCService" @close="closeModal">
         <template #title>
-            <h3 class="block-title">Update Service</h3>
+            <h3 class="block-title">Update Layanan</h3>
             <div class="block-options">
                 <button type="button" class="btn-block-option" @click="closeModal">
                     <i class="fa fa-fw fa-times"></i>
@@ -97,8 +97,9 @@ const formatRupiah = (value) => {
             </div>
 
             <div class="mb-3">
-                <InputLabel for="name" value="name" />
-                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control" placeholder="Name" />
+                <InputLabel for="name" value="Nama" />
+                <TextInput id="name" ref="name" v-model="form.name" type="text" class="form-control"
+                    placeholder="Name" />
                 <InputError :message="form.errors.name" class="mt-1" />
             </div>
 
@@ -110,10 +111,10 @@ const formatRupiah = (value) => {
             </div>
 
             <div class="mb-3">
-                <InputLabel for="price" value="price" />
-                <TextInput id="price" ref="price" v-model="form.price" type="number" class="form-control" placeholder="price" />
+                <InputLabel for="price" value="Harga" /> {{ formatRupiah(form.price) }}
+                <TextInput id="price" ref="price" v-model="form.price" type="number" class="form-control"
+                    placeholder="price" />
                 <InputError :message="form.errors.price" class="mt-1" />
-                <span>Formatted Price: {{ formatRupiah(form.price) }}</span>
             </div>
         </template>
         <template #footer>
