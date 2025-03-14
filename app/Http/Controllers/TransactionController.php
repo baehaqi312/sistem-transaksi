@@ -12,9 +12,15 @@ use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
 use PDF;
+use Xendit\Invoice\InvoiceApi;
+use Xendit\Configuration;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        Configuration::setXenditKey('xnd_development_iIKZBPYY1NtKmc5MzFUiLhZn0rmHYOm256thfdIzbvCXOEkHYshEgJskiKa8eXn');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -107,39 +113,63 @@ class TransactionController extends Controller
             ]);
         }
 
-         // Set Midtrans configuration
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
+        // Set Midtrans configuration
+        // Config::$serverKey = config('midtrans.server_key');
+        // Config::$isProduction = config('midtrans.is_production');
+        // Config::$isSanitized = config('midtrans.is_sanitized');
+        // Config::$is3ds = config('midtrans.is_3ds');
 
         // Create transaction parameters
+        // $params = [
+        //     'transaction_details' => [
+        //         'order_id' => $invoiceCode,
+        //         'gross_amount' => $total,
+        //     ],
+        //     'customer_details' => [
+        //         'first_name' => auth()->user()->name,
+        //         'email' => auth()->user()->email,
+        //     ],
+        //     'item_details' => $cart->items->map(function ($item) {
+        //         return [
+        //             'id' => $item->product->id,
+        //             'price' => $item->product->price,
+        //             'quantity' => $item->quantity,
+        //             'name' => $item->product->name,
+        //         ];
+        //     })->toArray(),
+        // ];
+
+        // $snapToken = Snap::getSnapToken($params);
+
+        // $transaction->midtrans_token = $snapToken;
+
+        $apiInstance = new InvoiceApi();
+
+        // foreach ($cart->items as $item) {
         $params = [
-            'transaction_details' => [
-                'order_id' => $invoiceCode,
-                'gross_amount' => $total,
-            ],
-            'customer_details' => [
-                'first_name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-            ],
-            'item_details' => $cart->items->map(function ($item) {
-                return [
-                    'id' => $item->product->id,
-                    'price' => $item->product->price,
-                    'quantity' => $item->quantity,
-                    'name' => $item->product->name,
-                ];
-            })->toArray(),
+            'external_id' => $item->product->id,
+            'amount' => $total,
+            'payer_email' => auth()->user()->email,
+            'description' => 'Pembayaran Invoice ' . $invoiceCode,
+            'redirect_url' => 'http://localhost:8000',
         ];
 
-        $snapToken = Snap::getSnapToken($params);
+        $createInvoice = $apiInstance->createInvoice($params);
 
-        $transaction->midtrans_token = $snapToken;
+        $transaction->midtrans_token = $createInvoice['invoice_url'];
         $transaction->save();
+        // }
 
         // Clear cart after transaction
+        // $cart->items()->delete();
+
+        // return redirect($createInvoice['invoice_url']);
+        // Clear cart after transaction
         $cart->items()->delete();
+
+        // return redirect($createInvoice['invoice_url']);
+
+
 
         return redirect()->route('transactions.show', $transaction->id)->with('success', 'Lanjut Pembayaran');
     }
@@ -199,7 +229,7 @@ class TransactionController extends Controller
         ];
 
         $pdf = Pdf::loadView('pdf.CetakInvoice', $data);
-        
+
         return $pdf->stream('document.pdf');
     }
 
@@ -216,7 +246,7 @@ class TransactionController extends Controller
         ];
 
         $pdf = Pdf::loadView('pdf.CetakLaporan', $data);
-        
+
         return $pdf->stream('laporan.pdf');
     }
 }

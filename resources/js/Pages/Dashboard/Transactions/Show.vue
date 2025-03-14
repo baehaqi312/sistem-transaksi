@@ -34,43 +34,47 @@ const form = useForm({
     status: 'completed',
 })
 
-onMounted(() => {
-    if (props.transactions.status === 'pending') {
-        const payButton = document.getElementById('pay-button');
-        payButton.addEventListener('click', () => {
-            snap.pay(props.transactions.midtrans_token, {
-                onSuccess: function (result) {
-                    // Redirect to a specific page
-                    router.patch(route('transactions.update', props.transactions.id));
-                },
-                onPending: function (result) {
-                    console.log('Pending:', result);
-                    // Handle pending
-                    // router.patch(route('transactions.update', props.transactions.id));
-                },
-                onError: function (result) {
-                    // console.log('Error:', result);
-                    // Handle error
-                },
-                onClose: function () {
-                    console.log('Customer closed the popup without finishing the payment');
-                    // Handle close
-                },
-            });
-        });
-    }
-});
+const openLinkInNewTab = () => {
+    window.open(props.transactions.midtrans_token, '_blank');
+}
 
-// Load Snap.js Midtrans script
-// Load Snap.js Midtrans script
-const loadSnapScript = (midtransClientKey) => {
-    let script = document.createElement('script');
-    script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
-    script.setAttribute('data-client-key', midtransClientKey); // Menggunakan client key dari prop
-    document.head.appendChild(script);
-};
+// onMounted(() => {
+//     if (props.transactions.status === 'pending') {
+//         const payButton = document.getElementById('pay-button');
+//         payButton.addEventListener('click', () => {
+//             snap.pay(props.transactions.midtrans_token, {
+//                 onSuccess: function (result) {
+//                     // Redirect to a specific page
+//                     router.patch(route('transactions.update', props.transactions.id));
+//                 },
+//                 onPending: function (result) {
+//                     console.log('Pending:', result);
+//                     // Handle pending
+//                     // router.patch(route('transactions.update', props.transactions.id));
+//                 },
+//                 onError: function (result) {
+//                     // console.log('Error:', result);
+//                     // Handle error
+//                 },
+//                 onClose: function () {
+//                     console.log('Customer closed the popup without finishing the payment');
+//                     // Handle close
+//                 },
+//             });
+//         });
+//     }
+// });
 
-loadSnapScript(props.midtransClientKey);
+// // Load Snap.js Midtrans script
+// // Load Snap.js Midtrans script
+// const loadSnapScript = (midtransClientKey) => {
+//     let script = document.createElement('script');
+//     script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+//     script.setAttribute('data-client-key', midtransClientKey); // Menggunakan client key dari prop
+//     document.head.appendChild(script);
+// };
+
+// loadSnapScript(props.midtransClientKey);
 </script>
 
 <template>
@@ -125,8 +129,9 @@ loadSnapScript(props.midtransClientKey);
                             </table>
                         </div>
                     </div>
-                    <button v-if="transactions.status === 'pending'" id="pay-button"
-                        class="btn btn-primary w-100 py-2 mb-3">
+
+                    <button v-if="transactions.status === 'pending'"
+                        class="btn btn-primary w-100 py-2 mb-3" @click="openLinkInNewTab">
                         Bayar Sekarang
                     </button>
 
